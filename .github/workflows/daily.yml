@@ -4,7 +4,8 @@ on:
   schedule:
     - cron: '0 0 * * *' # 每天北京时间上午8点自动运行
   workflow_dispatch: # 允许你手动点击运行，方便现在测试
-
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
