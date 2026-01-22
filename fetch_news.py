@@ -1,46 +1,41 @@
 import feedparser
 import datetime
-import re
 
 def update_web():
+    # 1. 抓取 Steam 新闻
     feed = feedparser.parse("https://store.steampowered.com/feeds/news.xml")
-    if not feed.entries: return
+    if not feed.entries:
+        print("未抓取到新闻")
+        return
 
-    # 生成符合 Swiper 结构的 HTML
-    news_html = '<div id="news-container" class="swiper-wrapper">\n'
+    # 2. 准备新闻幻灯片 HTML 片段
+    slides_html = ""
     for entry in feed.entries[:10]:
-        # 提取简短日期
-        pub_date = entry.published if 'published' in entry else "LIVE"
-        short_date = pub_date[:11]
-
-        news_html += f"""
+        pub_date = entry.published[:16] if 'published' in entry else "LIVE"
+        slides_html += f"""
         <div class="swiper-slide cursor-pointer" onclick="window.open('{entry.link}', '_blank')">
-            <div class="mb-4">
-                <span class="bg-blue-600 text-[10px] px-2 py-1 rounded shadow-lg font-bold">LATEST REPORT</span>
-            </div>
-            <h2 class="text-3xl font-bold mb-6 leading-tight hover:text-blue-300 transition-colors">{entry.title}</h2>
-            <div class="flex justify-between items-center text-slate-500 text-sm border-t border-white/10 pt-6">
-                <span>{short_date}</span>
-                <span class="text-blue-400 font-bold uppercase tracking-widest text-xs tracking-widest">Click to Read →</span>
+            <div class="flex flex-col h-full">
+                <div class="mb-4">
+                    <span class="bg-blue-600 text-[10px] px-2 py-1 rounded font-bold italic text-white tracking-widest">TOP NEWS</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black mb-8 leading-tight hover:text-blue-400 transition-colors">{entry.title}</h2>
+                <div class="mt-auto pt-6 border-t border-white/10 flex justify-between items-center text-slate-500 font-mono text-sm">
+                    <span>{pub_date}</span>
+                    <span class="text-blue-400 font-bold tracking-widest uppercase">Click to view Details →</span>
+                </div>
             </div>
         </div>
         """
-    news_html += '\n            </div>'
 
-    with open("index.html", "r", encoding="utf-8") as f:
-        content = f.read()
-
-    # 替换内容
-    pattern = r".*?"
-    replacement = f"\n        {news_html}\n        "
-    new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
-
-    # 更新同步时间
+    # 3. 直接定义一整个完整的 HTML 字符串
     now_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    new_content = re.sub(r'id="update-time".*?</p>', f'id="update-time" class="text-blue-500 font-mono text-sm mb-12 opacity-60 italic">LAST SYNC: {now_time} @ STEAMWORKS_SERVER</p>', new_content)
-
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(new_content)
-
-if __name__ == "__main__":
-    update_web()
+    full_html = f"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam News Monitor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {{ background-color: #0b0
