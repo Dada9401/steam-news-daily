@@ -2,10 +2,9 @@ name: Steam新闻自动更新
 
 on:
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+    - cron: '0 0 * * *' # 每天北京时间上午8点自动运行
+  workflow_dispatch: # 允许你手动点击运行
 
-# 关键：增加下面这两行权限声明
 permissions:
   contents: write
 
@@ -15,22 +14,23 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: 安装 Python
+      - name: 设置 Python 环境
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
           
-      - name: 安装依赖库
-        run: pip install feedparser
-        
+      # 这里就是你问的“具体位置”，我们在这里安装 requests 库
+      - name: 安装必要的插件
+        run: |
+          pip install requests
+
       - name: 运行抓取脚本
         run: python fetch_news.py
         
-      - name: 提交并推送更新
+      - name: 提交并推送更新到网页
         run: |
           git config --global user.name "Github Bot"
           git config --global user.email "bot@github.com"
           git add index.html
-          # 如果内容没变，git commit 会报错，用 || exit 0 忽略它
-          git commit -m "自动更新新闻: $(date)" || exit 0
+          git commit -m "自动同步最新Steam精选资讯: $(date)" || exit 0
           git push
