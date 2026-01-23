@@ -1,81 +1,93 @@
 import requests
 import datetime
 import re
+import feedparser # 需要在 daily.yml 加上这个库
 
-def get_latest_news(clan_id):
-    # 使用 Steam 内部活动接口，这是目前最实时的数据源
-    # clanid 39154431 为精选/官方混合，clanid 4 为 Steam 核心更新
-    url = f"https://store.steampowered.com/events/ajaxgetadjacentevents/?appid=0&clanid={clan_id}&count=15&l=schinese"
-    headers = {'User-Agent': 'Mozilla/5.0'}
+def get_steam_data(clan_id):
+    url = f"https://store.steampowered.com/events/ajaxgetadjacentevents/?appid=0&clanid={clan_id}&count=10&l=schinese&t={datetime.datetime.now().timestamp()}"
     try:
-        resp = requests.get(url, headers=headers, timeout=10).json()
-        return resp.get('events', [])
-    except:
-        return []
-
-def format_card(event, category_name):
-    title = event.get('event_name', 'Steam News')
-    # 提取时间戳并转换
-    ts = event.get('rtime_last_modified', 0)
-    date_str = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
-    
-    # 获取公告 ID 和 链接
-    gid = event.get('announcement_body', {}).get('gid', '')
-    link = f"https://store.steampowered.com/news/view/{gid}"
-    
-    # 强制匹配 2026 年最新大图
-    img_src = event.get('jsondata', {}).get('image_url', '')
-    if img_src:
-        img_url = f"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/0/events/{gid}/{img_src}"
-    else:
-        img_url = "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/594650/capsule_617x353.jpg"
-
-    return f"""
-    <div class="swiper-slide cursor-pointer" onclick="window.open('{link}', '_blank')">
-        <div class="relative h-full w-full overflow-hidden rounded-3xl border border-white/10 group bg-slate-800">
-            <img src="{img_url}" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#05070a] via-transparent to-transparent"></div>
-            <div class="absolute bottom-0 p-6 w-full">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="bg-blue-600 text-[10px] px-2 py-0.5 rounded font-bold italic">{category_name}</span>
-                    <span class="text-[10px] text-gray-400">{date_str}</span>
-                </div>
-                <h2 class="text-xl font-bold text-white line-clamp-2">{title}</h2>
-            </div>
-        </div>
-    </div>
-    """
+        return requests.get(url, timeout=10).json().get('events', [])
+    except: return []
 
 def update_web():
-    # 抓取不同板块
-    featured = get_latest_news("39154431") # 精选/推荐
-    official = get_latest_news("4")        # 官方/技术
+    # 1. 抓取 Steam 数据
+    featured = get_steam_data("39154431")
+    official = get_steam_data("4")
     
-    featured_html = "".join([format_card(e, "精选") for e in featured])
-    official_html = "".join([format_card(e, "官方") for e in official])
+    # 2. 抓取行业简报 (使用顶级游戏媒体源)
+    industry_feed = feedparser.parse("https://www.gamespot.com/feeds/news/")
+    briefs = [f"【{entry.title}】" for entry in industry_feed.entries[:15]]
+    ticker_text = " • ".join(briefs)
+
+    # 3. 组装卡片逻辑 (同前)
+    def make_slides(events, cat):
+        html = ""
+        for e in events:
+            gid = e.get('announcement_body', {}).get('gid', '')
+            img = e.get('jsondata', {}).get('image_url', '')
+            img_url = f"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/0/events/{gid}/{img}" if img else "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/594650/capsule_617x353.jpg"
+            html += f"""
+            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/view/{gid}', '_blank')">
+                <div class="relative h-full w-full overflow-hidden rounded-3xl border border-white/10 group bg-slate-900">
+                    <img src="{img_url}" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#05070a] to-transparent"></div>
+                    <div class="absolute bottom-0 p-6 w-full"><h2 class="text-xl font-bold text-white">{e.get('event_name')}</h2></div>
+                </div>
+            </div>"""
+        return html
 
     now_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     
+    # 4. 生成最终 HTML
     full_html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steam & 行业实时动态</title>
+    <title>Steam & 行业监控站</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {{ background: #05070a; color: white; font-family: sans-serif; overflow-x: hidden; }}
-        .swiper {{ width: 100%; height: 350px; padding: 20px 0; overflow: visible !important; }}
-        .swiper-slide {{ width: 420px; transition: opacity 0.3s; opacity: 0.4; }}
+        body {{ background: #05070a; color: white; font-family: sans-serif; overflow-x: hidden; padding-bottom: 60px; }}
+        .swiper {{ width: 100%; height: 350px; padding: 20px 0; }}
+        .swiper-slide {{ width: 420px; opacity: 0.5; transition: 0.3s; }}
         .swiper-slide-active {{ opacity: 1; }}
-        .section-header {{ display: flex; align-items: center; gap: 1rem; margin-top: 50px; }}
-        .section-header h2 {{ font-size: 1.8rem; font-weight: 900; font-style: italic; color: #3b82f6; }}
+        .ticker-wrap {{ position: fixed; bottom: 0; left: 0; width: 100%; background: #3b82f6; color: white; padding: 10px 0; z-index: 100; overflow: hidden; }}
+        .ticker {{ display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; font-weight: bold; font-size: 0.9rem; }}
+        @keyframes ticker {{ 0% {{ transform: translateX(100%); }} 100% {{ transform: translateX(-100%); }} }}
     </style>
 </head>
 <body class="p-4 md:p-12">
     <div class="max-w-7xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-baseline border-b border-blue-900/30 pb-6">
-            <h1 class="text-5xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-600">NEWS MONITOR</h1>
-            <p class="text-xs font-mono text-blue-500 uppercase tracking-widest mt-2 md:mt-0">Update: {now_time}</p>
+        <header class="flex justify-between items-center border-b border-blue-900/30 pb-6">
+            <h1 class="text-4xl font-black italic text-blue-500">NEWS MONITOR</h1>
+            <p class="text-[10px] font-mono opacity-50 italic uppercase tracking-[0.3em]">Last Sync: {now_time}</p>
         </header>
+
+        <h2 class="mt-12 text-2xl font-black italic text-white/90">FEATURED 精选</h2>
+        <div class="swiper mySwiper"><div class="swiper-wrapper">{make_slides(featured, "精选")}</div></div>
+
+        <h2 class="mt-8 text-2xl font-black italic text-blue-400/90">OFFICIAL 官方</h2>
+        <div class="swiper mySwiper"><div class="swiper-wrapper">{make_slides(official, "官方")}</div></div>
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker text-sm uppercase">
+             TOP INDUSTRY HEADLINES: {ticker_text}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('.mySwiper').forEach(el => {{
+            new Swiper(el, {{ effect: "coverflow", grabCursor: true, centeredSlides: true, slidesPerView: "auto", loop: true, autoplay: {{ delay: 4000 }} }});
+        }});
+    </script>
+</body>
+</html>"""
+
+    with open("index.html", "w", encoding="utf-8") as f:
+        f.write(full_html)
+
+if __name__ == "__main__":
+    update_web()
