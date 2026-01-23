@@ -10,8 +10,8 @@
         .swiper { width: 100%; height: 350px; padding: 20px 0; overflow: visible !important; }
         .swiper-slide { width: 420px; opacity: 0.3; transition: 0.5s; transform: scale(0.8); }
         .swiper-slide-active { opacity: 1; transform: scale(1); }
-        .ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; background: #2563eb; color: white; padding: 15px 0; z-index: 100; }
-        .ticker { display: inline-block; white-space: nowrap; animation: scroll 60s linear infinite; font-weight: bold; font-size: 14px; }
+        .ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; background: #2563eb; color: white; padding: 15px 0; z-index: 100; box-shadow: 0 -10px 30px rgba(0,0,0,0.5); }
+        .ticker { display: inline-block; white-space: nowrap; animation: scroll 80s linear infinite; font-weight: bold; font-size: 14px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     </style>
 </head>
@@ -22,7 +22,7 @@
                 <h1 class="text-5xl font-black italic text-blue-500 tracking-tighter">NEWS MONITOR</h1>
                 <p class="text-xs text-blue-400 font-mono mt-2 tracking-[0.3em]">RSS STABLE CHANNEL // JAN 2026</p>
             </div>
-            <div class="text-right font-mono text-[10px] text-gray-500 uppercase">SYNC: 2026-01-23 06:50</div>
+            <div class="text-right font-mono text-[10px] text-gray-500 uppercase">SYNC: 2026-01-23 07:03</div>
         </header>
 
         <h2 class="text-xl font-black mb-8 flex items-center gap-4"><span class="bg-blue-600 w-2 h-6"></span> FEATURED 精选资讯</h2>
@@ -72,21 +72,21 @@
                     </div>
                 </div>
             </div>
-            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/3224770/view/205609906301044035', '_blank')">
-                <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
-                    <img src="https://clan.fastly.steamstatic.com/images/45600230/3984b9aec38fddeaf6e0fc07306c8dabb2618a3c.png" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6 w-full">
-                        <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">A New Trainee Is Here!</h2>
-                    </div>
-                </div>
-            </div>
             <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/3224770/view/205609906301044033', '_blank')">
                 <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
                     <img src="https://clan.fastly.steamstatic.com/images/45600230/5c8b49c610a239493dea2e10e4c43935cc32d9cb.png" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                     <div class="absolute bottom-0 p-6 w-full">
                         <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">Main Story Chapter 5: Scenery Now Available!</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/3224770/view/205609906301044035', '_blank')">
+                <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
+                    <img src="https://clan.fastly.steamstatic.com/images/45600230/3984b9aec38fddeaf6e0fc07306c8dabb2618a3c.png" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6 w-full">
+                        <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">A New Trainee Is Here!</h2>
                     </div>
                 </div>
             </div>
@@ -99,15 +99,6 @@
                     </div>
                 </div>
             </div>
-            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/2694490/view/533247312774825604', '_blank')">
-                <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
-                    <img src="https://steamcommunity.com/public/shared/images/responsive/youtube_16x9_placeholder.gif" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6 w-full">
-                        <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">Build of the Week: Poison Basketballs by Pants</h2>
-                    </div>
-                </div>
-            </div>
             <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1371980/view/518610613985871596', '_blank')">
                 <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
                     <img src="https://clan.fastly.steamstatic.com/images/44781340/3f2a4b8d5422d83f030a3e87e79bc34ef75aa24c.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
@@ -116,10 +107,64 @@
                         <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">Twitch Drops are now Live!</h2>
                     </div>
                 </div>
+            </div>
+            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/2694490/view/533247312774825604', '_blank')">
+                <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
+                    <img src="https://steamcommunity.com/public/shared/images/responsive/youtube_16x9_placeholder.gif" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6 w-full">
+                        <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">Build of the Week: Poison Basketballs by Pants</h2>
+                    </div>
+                </div>
             </div></div></div>
 
         <h2 class="text-xl font-black mb-8 mt-16 flex items-center gap-4 text-blue-400"><span class="bg-blue-400 w-2 h-6"></span> OFFICIAL 官方公告</h2>
-        <div class="swiper mySwiper"><div class="swiper-wrapper"><div class="p-10 text-gray-500 italic">官方源同步中...</div></div></div>
+        <div class="swiper mySwiper"><div class="swiper-wrapper">
+            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/593110/view/541128612120625571', '_blank')">
+                <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/594650/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6 w-full">
+                        <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">Steam 客户端更新 - 1 月 21 日</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/511855214544814515', '_blank')">
+                <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/594650/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6 w-full">
+                        <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">Steam Deck Client Update: January 21st</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4397053/view/503973915196916155', '_blank')">
+                <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/594650/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6 w-full">
+                        <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">Steam Client Beta - January 21st</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/511855214544814517', '_blank')">
+                <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/594650/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6 w-full">
+                        <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">Steam Deck 测试版客户端更新 - 1 月 21 日</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4397053/view/70501918885023300', '_blank')">
+                <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/594650/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6 w-full">
+                        <h2 class="text-xl font-bold text-white line-clamp-2 drop-shadow-lg">Steam Client Beta - January 20th</h2>
+                    </div>
+                </div>
+            </div></div></div>
     </div>
 
     <div class="ticker-wrap"><div class="ticker">GLOBAL NEWS: 行业实时情报同步中...</div></div>
@@ -129,7 +174,8 @@
         document.querySelectorAll('.mySwiper').forEach(el => {
             new Swiper(el, {
                 effect: "coverflow", grabCursor: true, centeredSlides: true, slidesPerView: "auto", loop: true,
-                autoplay: { delay: 4000 }, coverflowEffect: { rotate: 0, stretch: 0, depth: 150, modifier: 2, slideShadows: false }
+                autoplay: { delay: 4000, disableOnInteraction: false },
+                coverflowEffect: { rotate: 0, stretch: 0, depth: 150, modifier: 2, slideShadows: false }
             });
         });
     </script>
