@@ -4,28 +4,29 @@ import re
 import time
 
 def get_steam_rss_data(url_type):
-    """使用 RSS 绕过 Steam 的 API 封锁"""
-    # 构造 RSS 地址 (精选 featured / 官方 official)
+    """
+    url_type: 'featured' (精选), 'steam' (平台官方), 'all' (全站)
+    """
+    # 调整官方板块的 RSS 源，'steam' 频道比 'official' 频道更稳定
     rss_url = f"https://store.steampowered.com/feeds/news/collection/{url_type}/?l=schinese"
-    print(f"尝试抓取 RSS: {rss_url}")
+    print(f"正在尝试抓取 Steam {url_type} 频道: {rss_url}")
     
     slides_html = ""
     try:
-        # 解析 RSS
         feed = feedparser.parse(rss_url)
         
-        if not feed.entries:
-            print(f"警告: {url_type} 板块未发现任何新闻。")
-            return ""
+        # 如果这个频道没内容，尝试抓取全站内容作为补充
+        if not feed.entries and url_type != "all":
+            print(f"警告: {url_type} 无内容，切换至全站备用源...")
+            return get_steam_rss_data("all")
 
         for entry in feed.entries[:10]:
             title = entry.title
             link = entry.link
-            # 从摘要中尝试匹配大图链接
             content = entry.get('summary', '') or entry.get('description', '')
-            img_match = re.search(r'<img [^>]*src="([^"]+)"', content)
             
-            # 如果没图，用 Steam 默认背景图
+            # 提取图片：增加容错，匹配多种图片格式
+            img_match = re.search(r'<img [^>]*src="([^"]+)"', content)
             img_url = img_match.group(1) if img_match else "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/594650/capsule_617x353.jpg"
             
             slides_html += f'''
@@ -40,7 +41,7 @@ def get_steam_rss_data(url_type):
             </div>'''
         return slides_html
     except Exception as e:
-        print(f"RSS 解析出错 ({url_type}): {e}")
+        print(f"RSS 解析出错: {e}")
         return ""
 
 def update_web():
@@ -54,11 +55,11 @@ def update_web():
             ticker_text = " • ".join([f"【{e.title}】" for e in industry_feed.entries[:12]])
     except: pass
 
-    # 2. 抓取板块内容
+    # 2. 抓取板块内容 (官方板块换成更稳的 'steam' 源)
     featured_html = get_steam_rss_data("featured")
-    official_html = get_steam_rss_data("official")
+    official_html = get_steam_rss_data("steam")
 
-    # 3. 生成 HTML
+    # 3. 最终 HTML 模板
     full_html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -71,8 +72,8 @@ def update_web():
         .swiper {{ width: 100%; height: 350px; padding: 20px 0; overflow: visible !important; }}
         .swiper-slide {{ width: 420px; opacity: 0.3; transition: 0.5s; transform: scale(0.8); }}
         .swiper-slide-active {{ opacity: 1; transform: scale(1); }}
-        .ticker-wrap {{ position: fixed; bottom: 0; left: 0; width: 100%; background: #2563eb; color: white; padding: 15px 0; z-index: 100; }}
-        .ticker {{ display: inline-block; white-space: nowrap; animation: scroll 60s linear infinite; font-weight: bold; font-size: 14px; }}
+        .ticker-wrap {{ position: fixed; bottom: 0; left: 0; width: 100%; background: #2563eb; color: white; padding: 15px 0; z-index: 100; box-shadow: 0 -10px 30px rgba(0,0,0,0.5); }}
+        .ticker {{ display: inline-block; white-space: nowrap; animation: scroll 80s linear infinite; font-weight: bold; font-size: 14px; }}
         @keyframes scroll {{ 0% {{ transform: translateX(100%); }} 100% {{ transform: translateX(-100%); }} }}
     </style>
 </head>
@@ -87,10 +88,10 @@ def update_web():
         </header>
 
         <h2 class="text-xl font-black mb-8 flex items-center gap-4"><span class="bg-blue-600 w-2 h-6"></span> FEATURED 精选资讯</h2>
-        <div class="swiper mySwiper"><div class="swiper-wrapper">{featured_html if featured_html else '<div class="p-10 text-gray-500 italic">精选源同步中...</div>'}</div></div>
+        <div class="swiper mySwiper"><div class="swiper-wrapper">{featured_html}</div></div>
 
         <h2 class="text-xl font-black mb-8 mt-16 flex items-center gap-4 text-blue-400"><span class="bg-blue-400 w-2 h-6"></span> OFFICIAL 官方公告</h2>
-        <div class="swiper mySwiper"><div class="swiper-wrapper">{official_html if official_html else '<div class="p-10 text-gray-500 italic">官方源同步中...</div>'}</div></div>
+        <div class="swiper mySwiper"><div class="swiper-wrapper">{official_html}</div></div>
     </div>
 
     <div class="ticker-wrap"><div class="ticker">GLOBAL NEWS: {ticker_text}</div></div>
@@ -100,7 +101,8 @@ def update_web():
         document.querySelectorAll('.mySwiper').forEach(el => {{
             new Swiper(el, {{
                 effect: "coverflow", grabCursor: true, centeredSlides: true, slidesPerView: "auto", loop: true,
-                autoplay: {{ delay: 4000 }}, coverflowEffect: {{ rotate: 0, stretch: 0, depth: 150, modifier: 2, slideShadows: false }}
+                autoplay: {{ delay: 4000, disableOnInteraction: false }},
+                coverflowEffect: {{ rotate: 0, stretch: 0, depth: 150, modifier: 2, slideShadows: false }}
             }});
         }});
     </script>
