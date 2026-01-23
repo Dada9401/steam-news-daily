@@ -3,43 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steam & 行业监控站</title>
+    <title>Steam & Industry Monitor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #05070a; color: white; font-family: sans-serif; overflow-x: hidden; padding-bottom: 60px; }
-        .swiper { width: 100%; height: 350px; padding: 20px 0; }
-        .swiper-slide { width: 420px; opacity: 0.5; transition: 0.3s; }
-        .swiper-slide-active { opacity: 1; }
-        .ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; background: #3b82f6; color: white; padding: 10px 0; z-index: 100; overflow: hidden; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; font-weight: bold; font-size: 0.9rem; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        body { background: #05070a; color: white; font-family: sans-serif; overflow-x: hidden; padding-bottom: 80px; }
+        .swiper { width: 100%; height: 280px; padding: 20px 0; overflow: visible !important; }
+        .swiper-slide { width: 320px; opacity: 0.4; transition: 0.4s; transform: scale(0.8); }
+        .swiper-slide-active { opacity: 1; transform: scale(1); }
+        .ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; background: #2563eb; color: white; padding: 12px 0; z-index: 100; }
+        .ticker { display: inline-block; white-space: nowrap; animation: scroll 80s linear infinite; font-size: 13px; font-weight: bold; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     </style>
 </head>
-<body class="p-4 md:p-12">
-    <div class="max-w-7xl mx-auto">
-        <header class="flex justify-between items-center border-b border-blue-900/30 pb-6">
-            <h1 class="text-4xl font-black italic text-blue-500">NEWS MONITOR</h1>
-            <p class="text-[10px] font-mono opacity-50 italic uppercase tracking-[0.3em]">Last Sync: 2026-01-23 06:31</p>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-10 border-b border-white/10 pb-4 flex justify-between items-end">
+            <h1 class="text-3xl font-black italic tracking-tighter text-blue-500">MONITOR 2026</h1>
+            <span class="text-[10px] font-mono opacity-40">LAST SYNC: 2026-01-23 06:39</span>
         </header>
 
-        <h2 class="mt-12 text-2xl font-black italic text-white/90">FEATURED 精选</h2>
-        <div class="swiper mySwiper"><div class="swiper-wrapper"></div></div>
+        <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><span class="w-1 h-5 bg-blue-600"></span> FEATURED 精选</h2>
+        <div class="swiper mySwiper"><div class="swiper-wrapper"><div class="p-10 text-gray-500">正在尝试重新连接 Steam 精选源...</div></div></div>
 
-        <h2 class="mt-8 text-2xl font-black italic text-blue-400/90">OFFICIAL 官方</h2>
-        <div class="swiper mySwiper"><div class="swiper-wrapper"></div></div>
+        <h2 class="text-lg font-bold mt-10 mb-4 flex items-center gap-2"><span class="w-1 h-5 bg-blue-400"></span> OFFICIAL 官方</h2>
+        <div class="swiper mySwiper"><div class="swiper-wrapper"><div class="p-10 text-gray-500">正在尝试重新连接 Steam 官方源...</div></div></div>
     </div>
 
-    <div class="ticker-wrap">
-        <div class="ticker text-sm uppercase">
-             TOP INDUSTRY HEADLINES: 
-        </div>
-    </div>
+    <div class="ticker-wrap"><div class="ticker">INDUSTRY BRIEF: 行业简报同步中...</div></div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         document.querySelectorAll('.mySwiper').forEach(el => {
-            new Swiper(el, { effect: "coverflow", grabCursor: true, centeredSlides: true, slidesPerView: "auto", loop: true, autoplay: { delay: 4000 } });
+            new Swiper(el, { effect: "coverflow", grabCursor: true, centeredSlides: true, slidesPerView: "auto", loop: true, autoplay: { delay: 3500 } });
         });
     </script>
 </body>
