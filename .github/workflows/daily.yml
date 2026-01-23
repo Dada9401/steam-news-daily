@@ -22,7 +22,7 @@ jobs:
       # 这里就是你问的“具体位置”，我们在这里安装 requests 库
       - name: 安装必要的插件
         run: |
-          pip install requests
+          pip install requests feedparser
 
       - name: 运行抓取脚本
         run: python fetch_news.py
