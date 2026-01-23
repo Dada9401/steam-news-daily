@@ -3,48 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steam 实时情报站</title>
+    <title>Steam & 行业监控站</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #05070a; color: white; font-family: sans-serif; }
-        .swiper { width: 100%; height: 300px; padding: 20px 0; }
-        .swiper-slide { width: 400px; }
-        .section-title { border-left: 4px solid #3b82f6; padding-left: 15px; margin: 40px 0 20px 0; font-weight: 900; font-style: italic; }
+        body { background: #05070a; color: white; font-family: sans-serif; overflow-x: hidden; padding-bottom: 60px; }
+        .swiper { width: 100%; height: 350px; padding: 20px 0; }
+        .swiper-slide { width: 420px; opacity: 0.5; transition: 0.3s; }
+        .swiper-slide-active { opacity: 1; }
+        .ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; background: #3b82f6; color: white; padding: 10px 0; z-index: 100; overflow: hidden; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; font-weight: bold; font-size: 0.9rem; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     </style>
 </head>
-<body class="p-8">
-    <div class="max-w-6xl mx-auto">
-        <header class="flex justify-between items-center mb-10">
-            <h1 class="text-4xl font-black italic tracking-tighter text-blue-500">STEAM INTELLIGENCE</h1>
-            <span class="text-xs font-mono opacity-50 text-white">SYNC: 2026-01-23 06:26</span>
+<body class="p-4 md:p-12">
+    <div class="max-w-7xl mx-auto">
+        <header class="flex justify-between items-center border-b border-blue-900/30 pb-6">
+            <h1 class="text-4xl font-black italic text-blue-500">NEWS MONITOR</h1>
+            <p class="text-[10px] font-mono opacity-50 italic uppercase tracking-[0.3em]">Last Sync: 2026-01-23 06:31</p>
         </header>
 
-        <h2 class="section-title text-2xl uppercase">Featured 精选内容</h2>
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper"></div>
-            <div class="swiper-pagination"></div>
-        </div>
+        <h2 class="mt-12 text-2xl font-black italic text-white/90">FEATURED 精选</h2>
+        <div class="swiper mySwiper"><div class="swiper-wrapper"></div></div>
 
-        <h2 class="section-title text-2xl uppercase text-blue-400">Official 官方公告</h2>
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper"></div>
-            <div class="swiper-pagination"></div>
+        <h2 class="mt-8 text-2xl font-black italic text-blue-400/90">OFFICIAL 官方</h2>
+        <div class="swiper mySwiper"><div class="swiper-wrapper"></div></div>
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker text-sm uppercase">
+             TOP INDUSTRY HEADLINES: 
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         document.querySelectorAll('.mySwiper').forEach(el => {
-            new Swiper(el, {
-                effect: "coverflow",
-                grabCursor: true,
-                centeredSlides: true,
-                slidesPerView: "auto",
-                loop: true,
-                coverflowEffect: { rotate: 30, stretch: 0, depth: 100, modifier: 1, slideShadows: true },
-                autoplay: { delay: 3000 + Math.random()*1000 }
-            });
+            new Swiper(el, { effect: "coverflow", grabCursor: true, centeredSlides: true, slidesPerView: "auto", loop: true, autoplay: { delay: 4000 } });
         });
     </script>
 </body>
