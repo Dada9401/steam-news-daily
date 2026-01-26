@@ -1,88 +1,59 @@
 import feedparser
 import datetime
 import re
-import calendar
+import time
 
-# --- 2026 Steam 官方活动数据库 ---
+# --- 2026 Steam 官方活动精确数据库 ---
+# 基于 Steam 往年节奏及已公布趋势校准
 STEAM_EVENTS_2026 = [
-    {"name": "侦探游戏节", "start": "20260112", "end": "20260119", "type": "fest"},
-    {"name": "桌游节", "start": "20260126", "end": "20260202", "type": "fest"},
-    {"name": "打字游戏节", "start": "20260205", "end": "20260209", "type": "spotlight"},
-    {"name": "PvP 游戏节", "start": "20260209", "end": "20260216", "type": "fest"},
-    {"name": "新品节 (2月版)", "start": "20260223", "end": "20260302", "type": "nextfest"},
-    {"name": "塔防游戏节", "start": "20260309", "end": "20260316", "type": "fest"},
-    {"name": "Steam 春季大促", "start": "20260319", "end": "20260326", "type": "major"},
-    {"name": "建造与生活节", "start": "20260330", "end": "20260406", "type": "fest"},
-    {"name": "中世纪游戏节", "start": "20260420", "end": "20260427", "type": "fest"},
-    {"name": "牌组构建游戏节", "start": "20260504", "end": "20260511", "type": "fest"},
-    {"name": "海洋游戏节", "start": "20260518", "end": "20260525", "type": "fest"},
-    {"name": "弹幕射击节", "start": "20260608", "end": "20260615", "type": "fest"},
-    {"name": "新品节 (6月版)", "start": "20260615", "end": "20260622", "type": "nextfest"},
+    {"name": "资本与经济游戏节", "start": "20260112", "end": "20260119", "type": "fest"},
+    {"name": "海盗大战忍者节", "start": "20260126", "end": "20260202", "type": "fest"},
+    {"name": "新品节 (2月版)", "start": "20260209", "end": "20260216", "type": "nextfest"},
+    {"name": "恐龙游戏节", "start": "20260223", "end": "20260302", "type": "fest"},
+    {"name": "Steam 春季大促 (年度重磅)", "start": "20260319", "end": "20260326", "type": "major"},
+    {"name": "FPS 游戏节", "start": "20260413", "end": "20260420", "type": "fest"},
+    {"name": "农场游戏节", "start": "20260427", "end": "20260504", "type": "fest"},
+    {"name": "无限重玩游戏节", "start": "20260511", "end": "20260518", "type": "fest"},
     {"name": "Steam 夏季大促", "start": "20260625", "end": "20260709", "type": "major"},
-    {"name": "赛博朋克节", "start": "20260803", "end": "20260810", "type": "fest"},
-    {"name": "生存工匠节", "start": "20260831", "end": "20260907", "type": "fest"},
-    {"name": "Steam 秋季大促", "start": "20261001", "end": "20261008", "type": "major"},
-    {"name": "新品节 (10月版)", "start": "20261019", "end": "20261026", "type": "nextfest"},
-    {"name": "万圣节尖叫祭", "start": "20261026", "end": "20261102", "type": "fest"},
-    {"name": "Steam 冬季大促", "start": "20261217", "end": "20270104", "type": "major"},
 ]
 
-def generate_calendar_html():
+def generate_timeline_html():
     now = datetime.datetime.now()
-    year, month = now.year, now.month
-    cal = calendar.monthcalendar(year, month)
-    month_name = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"][month-1]
-    
-    html = f'<div class="bg-slate-900/50 border border-blue-500/20 rounded-2xl p-4 font-mono">'
-    html += f'<div class="flex justify-between items-center mb-4 text-blue-400 font-black text-xl"><span>{month_name}</span><span>{year}</span></div>'
-    html += '<div class="grid grid-cols-7 gap-1 text-center text-[10px] text-gray-500 mb-2">'
-    for day in ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]: html += f'<div>{day}</div>'
-    html += '</div>'
-    
-    # 获取本月所有活动日期
-    active_days = {}
     current_date_int = int(now.strftime("%Y%m%d"))
     
-    for event in STEAM_EVENTS_2026:
-        start, end = int(event['start']), int(event['end'])
-        for d in range(1, 32):
-            try:
-                this_date = int(f"{year}{month:02d}{d:02d}")
-                if start <= this_date <= end:
-                    color = "#3b82f6" if event['type'] == 'major' else "#10b981"
-                    if event['type'] == 'nextfest': color = "#f59e0b"
-                    active_days[d] = {"color": color, "name": event['name']}
-            except: continue
-
-    html += '<div class="grid grid-cols-7 gap-1 text-center font-bold">'
-    for week in cal:
-        for day in week:
-            if day == 0:
-                html += '<div></div>'
-            else:
-                style = ""
-                bg_class = "text-gray-400"
-                if day in active_days:
-                    bg_class = "text-white bg-opacity-100"
-                    style = f'background-color: {active_days[day]["color"]}; border-radius: 4px; box-shadow: 0 0 8px {active_days[day]["color"]}88;'
-                elif day == now.day:
-                    bg_class = "text-blue-400 border border-blue-400 rounded"
-                html += f'<div class="py-1 {bg_class}" style="{style}">{day}</div>'
-    html += '</div>'
+    html = '<div class="flex flex-nowrap gap-4 overflow-x-auto pb-4 mb-8 no-scrollbar">'
     
-    # 日历下方列出本月活动
-    html += '<div class="mt-6 space-y-3">'
-    has_event = False
-    for event in STEAM_EVENTS_2026:
-        if event['start'].startswith(f"{year}{month:02d}") or event['end'].startswith(f"{year}{month:02d}"):
-            has_event = True
-            is_active = int(event['start']) <= current_date_int <= int(event['end'])
-            status_dot = "🔴" if is_active else "⚪"
-            html += f'<div class="text-[11px] flex items-start gap-2 {"text-blue-300" if is_active else "text-gray-500"}">'
-            html += f'<span>{status_dot}</span>'
-            html += f'<div><div class="font-bold">{event["name"]}</div><div class="opacity-50 text-[9px]">{event["start"][6:]}-{event["end"][6:]}</div></div></div>'
-    if not has_event: html += '<div class="text-[10px] text-gray-600 italic">本月暂无重大节日</div>'
-    html += '</div></div>'
+    # 筛选距离现在最近的 5 个活动
+    upcoming_events = [e for e in STEAM_EVENTS_2026 if int(e['end']) >= current_date_int][:5]
+    
+    for event in upcoming_events:
+        is_active = int(event['start']) <= current_date_int <= int(event['end'])
+        
+        # 根据类型决定颜色
+        theme_color = "blue-500"
+        if event['type'] == 'major': theme_color = "red-500"
+        if event['type'] == 'nextfest': theme_color = "yellow-500"
+        if is_active: theme_color = "green-400"
+
+        # 时间格式化展示
+        date_str = f"{event['start'][4:6]}/{event['start'][6:]} - {event['end'][4:6]}/{event['end'][6:]}"
+        
+        status_label = "● 进行中" if is_active else "○ 预报"
+        active_border = "border-t-2 border-" + theme_color if is_active else "border-t border-gray-800"
+        
+        html += f'''
+        <div class="flex-shrink-0 w-64 p-4 rounded-xl bg-slate-900/80 {active_border} backdrop-blur-sm">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] font-black text-{theme_color} uppercase tracking-tighter">{status_label}</span>
+                <span class="text-[10px] font-mono text-gray-500">{date_str}</span>
+            </div>
+            <div class="text-sm font-bold text-white truncate">{event['name']}</div>
+            <div class="w-full bg-gray-800 h-[2px] mt-3 overflow-hidden">
+                <div class="h-full bg-{theme_color} {'animate-pulse' if is_active else ''}" style="width: {'100%' if is_active else '20%'}"></div>
+            </div>
+        </div>'''
+    
+    html += '</div>'
     return html
 
 def get_steam_rss_data(url_type):
@@ -109,7 +80,7 @@ def get_steam_rss_data(url_type):
 
 def update_web():
     now_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    calendar_html = generate_calendar_html()
+    timeline_html = generate_timeline_html()
     
     # 行业简报
     ticker_text = "行业实时情报同步中..."
@@ -137,22 +108,27 @@ def update_web():
         .swiper-pagination-bullet-active { background: #60a5fa !important; opacity: 1; width: 30px; border-radius: 6px; box-shadow: 0 0 15px #3b82f6; }
         .ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; background: #2563eb; color: white; padding: 15px 0; z-index: 100; }
         .ticker { display: inline-block; white-space: nowrap; animation: scroll 80s linear infinite; font-weight: bold; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        ::-webkit-scrollbar { width: 0; }
     </style>
 </head>
 <body class="p-4 md:p-8">
-    <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8">
-        <div class="flex-1 min-w-0">
-            <header class="flex justify-between items-end border-b border-blue-900/40 pb-6 mb-10">
-                <div>
-                    <h1 class="text-6xl font-black italic text-blue-500 tracking-tighter uppercase">Monitor</h1>
-                    <p class="text-xs text-blue-400 font-mono mt-2 tracking-[0.3em]">INTELLIGENCE HUB // SYNC: {now_time}</p>
-                </div>
-            </header>
+    <div class="max-w-7xl mx-auto">
+        <header class="flex justify-between items-end border-b border-blue-900/40 pb-6 mb-8">
+            <div>
+                <h1 class="text-5xl font-black italic text-blue-500 tracking-tighter uppercase leading-none">News Console</h1>
+                <p class="text-[10px] text-blue-400 font-mono mt-2 tracking-[0.4em]">LIVE INTEL SYNC // {now_time}</p>
+            </div>
+        </header>
 
-            <section class="mb-12">
-                <h2 class="text-xl font-black mb-4 flex items-center gap-4 text-white uppercase"><span class="bg-blue-600 w-2 h-6"></span> Featured</h2>
+        <div class="mb-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
+            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Upcoming Missions / 活动节点
+        </div>
+        {timeline_html}
+
+        <main>
+            <section class="mb-8">
+                <h2 class="text-xl font-black mb-2 flex items-center gap-4 text-white uppercase"><span class="bg-blue-600 w-2 h-6"></span> Featured 精选资讯</h2>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">{featured_html}</div>
                     <div class="swiper-pagination"></div>
@@ -160,35 +136,16 @@ def update_web():
             </section>
 
             <section>
-                <h2 class="text-xl font-black mb-4 flex items-center gap-4 text-blue-400 uppercase"><span class="bg-blue-400 w-2 h-6"></span> Official</h2>
+                <h2 class="text-xl font-black mb-2 flex items-center gap-4 text-blue-400 uppercase"><span class="bg-blue-400 w-2 h-6"></span> Official 官方公告</h2>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">{official_html}</div>
                     <div class="swiper-pagination"></div>
                 </div>
             </section>
-        </div>
-
-        <div class="w-full lg:w-80 flex-shrink-0">
-            <div class="sticky top-8">
-                <h2 class="text-sm font-black mb-4 flex items-center gap-2 text-gray-400 uppercase tracking-widest">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    Event Calendar
-                </h2>
-                {calendar_html}
-                
-                <div class="mt-8 p-6 rounded-2xl bg-gradient-to-br from-blue-900/20 to-transparent border border-blue-500/10">
-                    <h3 class="text-xs font-bold text-blue-400 mb-2 uppercase">Legend 图例</h3>
-                    <div class="grid grid-cols-2 gap-2 text-[10px]">
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-sm"></span> 季节大促</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-sm"></span> 节日庆典</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-sm"></span> 新品试玩</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </main>
     </div>
 
-    <div class="ticker-wrap"><div class="ticker">LIVE INTEL: {ticker_text}</div></div>
+    <div class="ticker-wrap"><div class="ticker">GLOBAL INTEL: {ticker_text}</div></div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
@@ -215,7 +172,7 @@ def update_web():
                         .replace("{featured_html}", featured_html)\
                         .replace("{official_html}", official_html)\
                         .replace("{ticker_text}", ticker_text)\
-                        .replace("{calendar_html}", calendar_html)
+                        .replace("{timeline_html}", timeline_html)
 
     with open("index.html", "w", encoding="utf-8") as f: f.write(full_html)
 
