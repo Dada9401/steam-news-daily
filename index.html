@@ -14,22 +14,77 @@
         .swiper-pagination-bullet-active { background: #60a5fa !important; opacity: 1; width: 30px; border-radius: 6px; box-shadow: 0 0 15px #3b82f6; }
         .ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; background: #2563eb; color: white; padding: 15px 0; z-index: 100; }
         .ticker { display: inline-block; white-space: nowrap; animation: scroll 80s linear infinite; font-weight: bold; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        ::-webkit-scrollbar { width: 0; }
     </style>
 </head>
 <body class="p-4 md:p-8">
-    <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8">
-        <div class="flex-1 min-w-0">
-            <header class="flex justify-between items-end border-b border-blue-900/40 pb-6 mb-10">
-                <div>
-                    <h1 class="text-6xl font-black italic text-blue-500 tracking-tighter uppercase">Monitor</h1>
-                    <p class="text-xs text-blue-400 font-mono mt-2 tracking-[0.3em]">INTELLIGENCE HUB // SYNC: 2026-01-26 06:29</p>
-                </div>
-            </header>
+    <div class="max-w-7xl mx-auto">
+        <header class="flex justify-between items-end border-b border-blue-900/40 pb-6 mb-8">
+            <div>
+                <h1 class="text-5xl font-black italic text-blue-500 tracking-tighter uppercase leading-none">News Console</h1>
+                <p class="text-[10px] text-blue-400 font-mono mt-2 tracking-[0.4em]">LIVE INTEL SYNC // 2026-01-26 06:32</p>
+            </div>
+        </header>
 
-            <section class="mb-12">
-                <h2 class="text-xl font-black mb-4 flex items-center gap-4 text-white uppercase"><span class="bg-blue-600 w-2 h-6"></span> Featured</h2>
+        <div class="mb-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
+            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Upcoming Missions / 活动节点
+        </div>
+        <div class="flex flex-nowrap gap-4 overflow-x-auto pb-4 mb-8 no-scrollbar">
+        <div class="flex-shrink-0 w-64 p-4 rounded-xl bg-slate-900/80 border-t-2 border-green-400 backdrop-blur-sm">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] font-black text-green-400 uppercase tracking-tighter">● 进行中</span>
+                <span class="text-[10px] font-mono text-gray-500">01/26 - 02/02</span>
+            </div>
+            <div class="text-sm font-bold text-white truncate">海盗大战忍者节</div>
+            <div class="w-full bg-gray-800 h-[2px] mt-3 overflow-hidden">
+                <div class="h-full bg-green-400 animate-pulse" style="width: 100%"></div>
+            </div>
+        </div>
+        <div class="flex-shrink-0 w-64 p-4 rounded-xl bg-slate-900/80 border-t border-gray-800 backdrop-blur-sm">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] font-black text-yellow-500 uppercase tracking-tighter">○ 预报</span>
+                <span class="text-[10px] font-mono text-gray-500">02/09 - 02/16</span>
+            </div>
+            <div class="text-sm font-bold text-white truncate">新品节 (2月版)</div>
+            <div class="w-full bg-gray-800 h-[2px] mt-3 overflow-hidden">
+                <div class="h-full bg-yellow-500 " style="width: 20%"></div>
+            </div>
+        </div>
+        <div class="flex-shrink-0 w-64 p-4 rounded-xl bg-slate-900/80 border-t border-gray-800 backdrop-blur-sm">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] font-black text-blue-500 uppercase tracking-tighter">○ 预报</span>
+                <span class="text-[10px] font-mono text-gray-500">02/23 - 03/02</span>
+            </div>
+            <div class="text-sm font-bold text-white truncate">恐龙游戏节</div>
+            <div class="w-full bg-gray-800 h-[2px] mt-3 overflow-hidden">
+                <div class="h-full bg-blue-500 " style="width: 20%"></div>
+            </div>
+        </div>
+        <div class="flex-shrink-0 w-64 p-4 rounded-xl bg-slate-900/80 border-t border-gray-800 backdrop-blur-sm">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] font-black text-red-500 uppercase tracking-tighter">○ 预报</span>
+                <span class="text-[10px] font-mono text-gray-500">03/19 - 03/26</span>
+            </div>
+            <div class="text-sm font-bold text-white truncate">Steam 春季大促 (年度重磅)</div>
+            <div class="w-full bg-gray-800 h-[2px] mt-3 overflow-hidden">
+                <div class="h-full bg-red-500 " style="width: 20%"></div>
+            </div>
+        </div>
+        <div class="flex-shrink-0 w-64 p-4 rounded-xl bg-slate-900/80 border-t border-gray-800 backdrop-blur-sm">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] font-black text-blue-500 uppercase tracking-tighter">○ 预报</span>
+                <span class="text-[10px] font-mono text-gray-500">04/13 - 04/20</span>
+            </div>
+            <div class="text-sm font-bold text-white truncate">FPS 游戏节</div>
+            <div class="w-full bg-gray-800 h-[2px] mt-3 overflow-hidden">
+                <div class="h-full bg-blue-500 " style="width: 20%"></div>
+            </div>
+        </div></div>
+
+        <main>
+            <section class="mb-8">
+                <h2 class="text-xl font-black mb-2 flex items-center gap-4 text-white uppercase"><span class="bg-blue-600 w-2 h-6"></span> Featured 精选资讯</h2>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
             <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/270880/view/490463116313757604', '_blank')">
@@ -93,7 +148,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-black mb-4 flex items-center gap-4 text-blue-400 uppercase"><span class="bg-blue-400 w-2 h-6"></span> Official</h2>
+                <h2 class="text-xl font-black mb-2 flex items-center gap-4 text-blue-400 uppercase"><span class="bg-blue-400 w-2 h-6"></span> Official 官方公告</h2>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
             <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/511855214544814515', '_blank')">
@@ -124,39 +179,20 @@
                     <div class="absolute bottom-0 p-6 w-full"><h2 class="text-xl font-bold text-white line-clamp-2">Steam Client Beta - January 21st</h2></div>
                 </div>
             </div>
-            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4397053/view/70501918885023300', '_blank')">
+            <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/373368994105658805', '_blank')">
                 <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
                     <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/594650/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-all duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6 w-full"><h2 class="text-xl font-bold text-white line-clamp-2">Steam Client Beta - January 20th</h2></div>
+                    <div class="absolute bottom-0 p-6 w-full"><h2 class="text-xl font-bold text-white line-clamp-2">Steam Deck 测试版客户端更新 - 1 月 20 日</h2></div>
                 </div>
             </div></div>
                     <div class="swiper-pagination"></div>
                 </div>
             </section>
-        </div>
-
-        <div class="w-full lg:w-80 flex-shrink-0">
-            <div class="sticky top-8">
-                <h2 class="text-sm font-black mb-4 flex items-center gap-2 text-gray-400 uppercase tracking-widest">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    Event Calendar
-                </h2>
-                <div class="bg-slate-900/50 border border-blue-500/20 rounded-2xl p-4 font-mono"><div class="flex justify-between items-center mb-4 text-blue-400 font-black text-xl"><span>JAN</span><span>2026</span></div><div class="grid grid-cols-7 gap-1 text-center text-[10px] text-gray-500 mb-2"><div>MO</div><div>TU</div><div>WE</div><div>TH</div><div>FR</div><div>SA</div><div>SU</div></div><div class="grid grid-cols-7 gap-1 text-center font-bold"><div></div><div></div><div></div><div class="py-1 text-gray-400" style="">1</div><div class="py-1 text-gray-400" style="">2</div><div class="py-1 text-gray-400" style="">3</div><div class="py-1 text-gray-400" style="">4</div><div class="py-1 text-gray-400" style="">5</div><div class="py-1 text-gray-400" style="">6</div><div class="py-1 text-gray-400" style="">7</div><div class="py-1 text-gray-400" style="">8</div><div class="py-1 text-gray-400" style="">9</div><div class="py-1 text-gray-400" style="">10</div><div class="py-1 text-gray-400" style="">11</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">12</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">13</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">14</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">15</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">16</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">17</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">18</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">19</div><div class="py-1 text-gray-400" style="">20</div><div class="py-1 text-gray-400" style="">21</div><div class="py-1 text-gray-400" style="">22</div><div class="py-1 text-gray-400" style="">23</div><div class="py-1 text-gray-400" style="">24</div><div class="py-1 text-gray-400" style="">25</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">26</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">27</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">28</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">29</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">30</div><div class="py-1 text-white bg-opacity-100" style="background-color: #10b981; border-radius: 4px; box-shadow: 0 0 8px #10b98188;">31</div><div></div></div><div class="mt-6 space-y-3"><div class="text-[11px] flex items-start gap-2 text-gray-500"><span>⚪</span><div><div class="font-bold">侦探游戏节</div><div class="opacity-50 text-[9px]">12-19</div></div></div><div class="text-[11px] flex items-start gap-2 text-blue-300"><span>🔴</span><div><div class="font-bold">桌游节</div><div class="opacity-50 text-[9px]">26-02</div></div></div></div></div>
-                
-                <div class="mt-8 p-6 rounded-2xl bg-gradient-to-br from-blue-900/20 to-transparent border border-blue-500/10">
-                    <h3 class="text-xs font-bold text-blue-400 mb-2 uppercase">Legend 图例</h3>
-                    <div class="grid grid-cols-2 gap-2 text-[10px]">
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-sm"></span> 季节大促</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-sm"></span> 节日庆典</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-sm"></span> 新品试玩</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </main>
     </div>
 
-    <div class="ticker-wrap"><div class="ticker">LIVE INTEL: 【Fortnite X South Park Quests: How To Solve Kenny's Mystery Quests】 • 【Super Mario Galaxy Movie's New Trailer Introduces Yoshi And Birdo】 • 【Score A Limited-Time Deal On This Sonic the Hedgehog Arcade Machine】 • 【Sonic Racing: CrossWorlds Switch 2 Physical Edition Includes The Full Game Data】 • 【Dead By Daylight Lets Fans Choose A Hero's Face And The Shape Of Evil】 • 【The Upcoming Dinkum Physical Release Includes Bonus Content, But Only If You Preorder At GameStop】 • 【WoW's Pricey Transmog Overhaul Just Got Way Cheaper】 • 【Major Video Game Union Comes Out Against EA Saudi Buyout】 • 【The Hobbit &The Lord of the Rings 25th Anniversary Movie Tie-In Books Are Up For Preorder】 • 【I Hope Double Fine Keeps Getting To Make Weird Games Forever】 • 【Highguard Devs Will Break Silence With Launch-Day Stream】 • 【The Halo: Flashpoint Feet First Into Hell Expandalone Is Under $100 On Amazon.】</div></div>
+    <div class="ticker-wrap"><div class="ticker">GLOBAL INTEL: 【Fortnite X South Park Quests: How To Solve Kenny's Mystery Quests】 • 【Super Mario Galaxy Movie's New Trailer Introduces Yoshi And Birdo】 • 【Score A Limited-Time Deal On This Sonic the Hedgehog Arcade Machine】 • 【Sonic Racing: CrossWorlds Switch 2 Physical Edition Includes The Full Game Data】 • 【Dead By Daylight Lets Fans Choose A Hero's Face And The Shape Of Evil】 • 【The Upcoming Dinkum Physical Release Includes Bonus Content, But Only If You Preorder At GameStop】 • 【WoW's Pricey Transmog Overhaul Just Got Way Cheaper】 • 【Major Video Game Union Comes Out Against EA Saudi Buyout】 • 【The Hobbit &The Lord of the Rings 25th Anniversary Movie Tie-In Books Are Up For Preorder】 • 【I Hope Double Fine Keeps Getting To Make Weird Games Forever】 • 【Highguard Devs Will Break Silence With Launch-Day Stream】 • 【The Halo: Flashpoint Feet First Into Hell Expandalone Is Under $100 On Amazon.】</div></div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
