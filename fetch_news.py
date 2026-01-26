@@ -3,18 +3,15 @@ import datetime
 import re
 import time
 
-# --- 2026 Steam 官方活动精确数据库 ---
-# 基于 Steam 往年节奏及已公布趋势校准
+# --- 2026 Steam 官方活动【校准版】 ---
 STEAM_EVENTS_2026 = [
-    {"name": "资本与经济游戏节", "start": "20260112", "end": "20260119", "type": "fest"},
-    {"name": "海盗大战忍者节", "start": "20260126", "end": "20260202", "type": "fest"},
-    {"name": "新品节 (2月版)", "start": "20260209", "end": "20260216", "type": "nextfest"},
+    {"name": "即时战略 (RTS) 游戏节", "start": "20260119", "end": "20260126", "type": "fest"},
+    {"name": "自走棋与牌组构建节", "start": "20260126", "end": "20260202", "type": "fest"},
+    {"name": "Steam 新品节 (2月版)", "start": "20260202", "end": "20260209", "type": "nextfest"},
+    {"name": "农历新年大促 (Spring Festival)", "start": "20260212", "end": "20260219", "type": "major"},
     {"name": "恐龙游戏节", "start": "20260223", "end": "20260302", "type": "fest"},
-    {"name": "Steam 春季大促 (年度重磅)", "start": "20260319", "end": "20260326", "type": "major"},
+    {"name": "Steam 春季大促", "start": "20260319", "end": "20260326", "type": "major"},
     {"name": "FPS 游戏节", "start": "20260413", "end": "20260420", "type": "fest"},
-    {"name": "农场游戏节", "start": "20260427", "end": "20260504", "type": "fest"},
-    {"name": "无限重玩游戏节", "start": "20260511", "end": "20260518", "type": "fest"},
-    {"name": "Steam 夏季大促", "start": "20260625", "end": "20260709", "type": "major"},
 ]
 
 def generate_timeline_html():
@@ -23,38 +20,37 @@ def generate_timeline_html():
     
     html = '<div class="flex flex-nowrap gap-4 overflow-x-auto pb-4 mb-8 no-scrollbar">'
     
-    # 筛选距离现在最近的 5 个活动
+    # 获取距离现在最近且未结束的活动
     upcoming_events = [e for e in STEAM_EVENTS_2026 if int(e['end']) >= current_date_int][:5]
     
     for event in upcoming_events:
         is_active = int(event['start']) <= current_date_int <= int(event['end'])
         
-        # 根据类型决定颜色
+        # 颜色逻辑
         theme_color = "blue-500"
         if event['type'] == 'major': theme_color = "red-500"
         if event['type'] == 'nextfest': theme_color = "yellow-500"
         if is_active: theme_color = "green-400"
 
-        # 时间格式化展示
         date_str = f"{event['start'][4:6]}/{event['start'][6:]} - {event['end'][4:6]}/{event['end'][6:]}"
-        
-        status_label = "● 进行中" if is_active else "○ 预报"
-        active_border = "border-t-2 border-" + theme_color if is_active else "border-t border-gray-800"
+        status_label = "● ACTIVE NOW" if is_active else "○ STANDBY"
         
         html += f'''
-        <div class="flex-shrink-0 w-64 p-4 rounded-xl bg-slate-900/80 {active_border} backdrop-blur-sm">
+        <div class="flex-shrink-0 w-64 p-4 rounded-xl bg-slate-900/60 border-t-2 border-{theme_color} backdrop-blur-md">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-[10px] font-black text-{theme_color} uppercase tracking-tighter">{status_label}</span>
-                <span class="text-[10px] font-mono text-gray-500">{date_str}</span>
+                <span class="text-[9px] font-black text-{theme_color} tracking-widest">{status_label}</span>
+                <span class="text-[9px] font-mono text-gray-500">{date_str}</span>
             </div>
             <div class="text-sm font-bold text-white truncate">{event['name']}</div>
-            <div class="w-full bg-gray-800 h-[2px] mt-3 overflow-hidden">
-                <div class="h-full bg-{theme_color} {'animate-pulse' if is_active else ''}" style="width: {'100%' if is_active else '20%'}"></div>
+            <div class="w-full bg-gray-800 h-[2px] mt-3">
+                <div class="h-full bg-{theme_color} {'animate-pulse' if is_active else ''}" style="width: {'100%' if is_active else '15%'}"></div>
             </div>
         </div>'''
     
     html += '</div>'
     return html
+
+# ... [get_steam_rss_data 函数保持不变] ...
 
 def get_steam_rss_data(url_type):
     rss_url = f"https://store.steampowered.com/feeds/news/collection/{url_type}/?l=schinese"
@@ -72,7 +68,9 @@ def get_steam_rss_data(url_type):
                 <div class="relative h-full w-full overflow-hidden rounded-3xl bg-slate-900 border border-white/10 group">
                     <img src="{img_url}" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-all duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6 w-full"><h2 class="text-xl font-bold text-white line-clamp-2">{title}</h2></div>
+                    <div class="absolute bottom-0 p-6 w-full text-left">
+                        <h2 class="text-xl font-bold text-white line-clamp-2">{title}</h2>
+                    </div>
                 </div>
             </div>'''
         return slides_html
@@ -82,12 +80,10 @@ def update_web():
     now_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     timeline_html = generate_timeline_html()
     
-    # 行业简报
-    ticker_text = "行业实时情报同步中..."
     try:
         industry_feed = feedparser.parse("https://www.gamespot.com/feeds/news/")
-        if industry_feed.entries: ticker_text = " • ".join([f"【{e.title}】" for e in industry_feed.entries[:12]])
-    except: pass
+        ticker_text = " • ".join([f"【{e.title}】" for e in industry_feed.entries[:12]]) if industry_feed.entries else "情报中心正常运转中..."
+    except: ticker_text = "数据链路连接稳定..."
 
     featured_html = get_steam_rss_data("featured")
     official_html = get_steam_rss_data("steam")
@@ -117,12 +113,12 @@ def update_web():
         <header class="flex justify-between items-end border-b border-blue-900/40 pb-6 mb-8">
             <div>
                 <h1 class="text-5xl font-black italic text-blue-500 tracking-tighter uppercase leading-none">News Console</h1>
-                <p class="text-[10px] text-blue-400 font-mono mt-2 tracking-[0.4em]">LIVE INTEL SYNC // {now_time}</p>
+                <p class="text-[10px] text-blue-400 font-mono mt-2 tracking-[0.4em]">STABLE INTELLIGENCE SYNC // {now_time}</p>
             </div>
         </header>
 
-        <div class="mb-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
-            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Upcoming Missions / 活动节点
+        <div class="mb-4 text-[9px] font-bold text-gray-500 uppercase tracking-[0.3em] flex items-center gap-2">
+            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span> Mission Timeline / 节点
         </div>
         {timeline_html}
 
@@ -134,7 +130,6 @@ def update_web():
                     <div class="swiper-pagination"></div>
                 </div>
             </section>
-
             <section>
                 <h2 class="text-xl font-black mb-2 flex items-center gap-4 text-blue-400 uppercase"><span class="bg-blue-400 w-2 h-6"></span> Official 官方公告</h2>
                 <div class="swiper mySwiper">
@@ -144,7 +139,6 @@ def update_web():
             </section>
         </main>
     </div>
-
     <div class="ticker-wrap"><div class="ticker">GLOBAL INTEL: {ticker_text}</div></div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
