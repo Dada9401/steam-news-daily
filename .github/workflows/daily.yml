@@ -1,36 +1,33 @@
-name: Steam新闻自动更新
+name: Update Steam Intel Page
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天北京时间上午8点自动运行
-  workflow_dispatch: # 允许你手动点击运行
-
-permissions:
-  contents: write
+    - cron: '0 */6 * * *' # 每6小时自动运行一次
+  workflow_dispatch:      # 支持手动触发
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: 设置 Python 环境
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
-          
-      # 这里就是你问的“具体位置”，我们在这里安装 requests 库
-      - name: 安装必要的插件
-        run: |
-          pip install requests feedparser
+          python-version: '3.10'
 
-      - name: 运行抓取脚本
-        run: python fetch_news.py
-        
-      - name: 提交并推送更新到网页
+      - name: Install dependencies
         run: |
-          git config --global user.name "Github Bot"
-          git config --global user.email "bot@github.com"
+          pip install feedparser
+
+      - name: Run Update Script
+        run: python steam_intel.py # 请确保你的文件名与此一致
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "自动同步最新Steam精选资讯: $(date)" || exit 0
+          git commit -m "Update News: $(date)" || echo "No changes to commit"
           git push
