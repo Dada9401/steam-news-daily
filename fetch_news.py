@@ -16,11 +16,9 @@ STEAM_EVENTS_2026 = [
     {"name": "Steam 新品节 (6月版)", "start": "20260615", "end": "20260622", "type": "nextfest"},
     {"name": "Steam 夏季特卖", "start": "20260625", "end": "20260709", "type": "major"},
 ]
-
 def generate_timeline_html():
     now = datetime.datetime.now()
     curr_int = int(now.strftime("%Y%m%d"))
-    # 顶部 Roadmap：仅 Steam 官方，按时间排序
     steam_events = [e for e in ALL_EVENTS_2026 if e['type'] == 'steam' and int(e['end']) >= curr_int]
     steam_events.sort(key=lambda x: x['start'])
     
@@ -42,27 +40,17 @@ def generate_timeline_html():
     return html + '</div>'
 
 def generate_active_ticker():
-    """滚动条逻辑：第三方活动必须是已开展状态才显示"""
     now = datetime.datetime.now()
     curr_int = int(now.strftime("%Y%m%d"))
-    
-    # 规则：Steam活动（正在进行或3天内即将开始）；第三方活动（必须正在进行）
     active_events = []
     for e in ALL_EVENTS_2026:
         is_active = int(e['start']) <= curr_int <= int(e['end'])
         is_upcoming_steam = e['type'] == 'steam' and (0 < int(e['start']) - curr_int <= 3)
-        
         if is_active or is_upcoming_steam:
             active_events.append(e)
     
     if not active_events: return ""
-
-    contents = []
-    for e in active_events:
-        prefix = "🔥 正在进行" if int(e['start']) <= curr_int else "⏳ 即将开始"
-        tag = "[第三方]" if e['type'] == 'third-party' else "[Steam]"
-        contents.append(f"{prefix}: {tag} {e['name']} | <a href='{e.get('url','#')}' target='_blank' class='underline decoration-wavy'>进入会场</a>")
-
+    contents = [f"{('🔥 正在进行' if int(e['start']) <= curr_int else '⏳ 即将开始')}: [{ 'Steam' if e['type']=='steam' else '第三方' }] {e['name']} | <a href='{e['url']}' target='_blank' class='underline decoration-wavy'>详情</a>" for e in active_events]
     ticker_text = " ——— ".join(contents)
     return f'''
     <div class="fixed bottom-0 left-0 w-full bg-blue-700 text-white py-2 z-[100] overflow-hidden whitespace-nowrap border-t border-white/20 shadow-2xl">
@@ -75,60 +63,45 @@ def get_steam_rss_data(mode, exclude_links=None):
     if exclude_links is None: exclude_links = set()
     source_map = {
         "featured": ["https://store.steampowered.com/feeds/news/collection/featured/?l=schinese"],
-        "official": ["https://store.steampowered.com/feeds/news/collection/steam/?l=schinese", "https://store.steampowered.com/feeds/news/group/39049601/?l=schinese"]
+        "official": ["https://store.steampowered.com/feeds/news/collection/steam/?l=schinese"]
     }
-    
     entries = []
-    seen_links = set()
     now_date = datetime.datetime.now().strftime("%m-%d")
 
     for url in source_map.get(mode, []):
         try:
             feed = feedparser.parse(f"{url}&v={random.random()}")
             for e in feed.entries:
-                if e.link not in seen_links and e.link not in exclude_links:
+                if e.link not in exclude_links:
                     entries.append(e)
-                    seen_links.add(e.link)
+                    exclude_links.add(e.link)
         except: continue
 
     def get_priority_score(entry):
-        # 基础分：发布时间戳
         score = time.mktime(entry.get('published_parsed', time.gmtime(0)))
         title = entry.title.lower()
         pub_date = time.strftime("%m-%d", entry.published_parsed) if hasattr(entry, 'published_parsed') else ""
-        
         is_fest = any(k in title for k in ["游戏节", "festival", "fest", "新品节"])
-        is_today = (pub_date == now_date)
-        
-        # 权重叠加：今日 + 游戏节 > 历史 + 游戏节 > 普通新闻
         if is_fest:
-            score += 10**10 
-            if is_today:
-                score += 10**11 # 最高权重
+            score += 10**10
+            if pub_date == now_date: score += 10**11
         return score
 
     entries.sort(key=get_priority_score, reverse=True)
-
     slides_html = ""
     for e in entries[:10]:
         title, link = e.title, e.link
-        exclude_links.add(link)
         content = e.get('summary', '') or e.get('description', '')
         img = re.search(r'<img [^>]*src="([^"]+)"', content)
         img_url = img.group(1) if img else "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg"
         pub_time = time.strftime("%m-%d %H:%M", e.published_parsed) if hasattr(e, 'published_parsed') else "RECENT"
-        
-        # 判断是否需要发光边框 (今日游戏节新闻)
         is_fest = any(k in title.lower() for k in ["游戏节", "festival", "fest"])
         is_today = (time.strftime("%m-%d", e.published_parsed) == now_date) if hasattr(e, 'published_parsed') else False
         
-        highlight_class = ""
-        if is_fest and is_today:
-            highlight_class = "ring-4 ring-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.5)] animate-pulse"
-
+        highlight = "ring-4 ring-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.5)] animate-pulse" if is_fest and is_today else ""
         slides_html += f'''
         <div class="swiper-slide group cursor-pointer" onclick="window.open('{link}', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500 {highlight_class}">
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-slate-200 dark:border-white/5 {highlight}">
                 <img src="{img_url}" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-90"></div>
                 <div class="absolute bottom-0 p-8 w-full">
@@ -140,14 +113,17 @@ def get_steam_rss_data(mode, exclude_links=None):
                 </div>
             </div>
         </div>'''
-    return slides_html, exclude_links
+    return slides_html
 
 def update_web():
     now_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     timeline = generate_timeline_html()
     ticker = generate_active_ticker()
-    feat_html, used_links = get_steam_rss_data("featured")
-    offi_html, _ = get_steam_rss_data("official", exclude_links=used_links)
+    
+    # 获取数据
+    exclude = set()
+    feat_html = get_steam_rss_data("featured", exclude)
+    offi_html = get_steam_rss_data("official", exclude)
 
     template = f'''<!DOCTYPE html>
 <html lang="zh-CN" class="dark">
@@ -159,12 +135,7 @@ def update_web():
     <script>
         tailwind.config = {{ 
             darkMode: 'class',
-            theme: {{
-                extend: {{
-                    animation: {{ 'marquee': 'marquee 35s linear infinite' }},
-                    keyframes: {{ marquee: {{ '0%': {{ transform: 'translateX(0%)' }}, '100%': {{ transform: 'translateX(-50%)' }} }} }}
-                }}
-            }}
+            theme: {{ extend: {{ animation: {{ 'marquee': 'marquee 35s linear infinite' }}, keyframes: {{ marquee: {{ '0%': {{ transform: 'translateX(0%)' }}, '100%': {{ transform: 'translateX(-50%)' }} }} }} }} }}
         }}
         function toggleTheme() {{
             const isDark = document.documentElement.classList.toggle('dark');
@@ -174,19 +145,18 @@ def update_web():
     <style>
         .no-scrollbar::-webkit-scrollbar {{ display: none; }}
         .swiper {{ width: 100%; height: 500px; padding: 20px 0 80px 0; overflow: visible !important; }}
-        .swiper-slide {{ width: 550px; opacity: 0.1; transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); transform: scale(0.85); filter: blur(4px); }}
+        .swiper-slide {{ width: 550px; opacity: 0.1; transition: 0.8s; transform: scale(0.85); filter: blur(4px); }}
         .swiper-slide-active {{ opacity: 1; transform: scale(1); filter: blur(0); z-index: 20; }}
-        body {{ transition: background-color 0.5s; }}
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen pb-32">
     <div class="max-w-[1500px] mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
-            <div class="text-center md:text-left">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8 text-center md:text-left">
+            <div>
                 <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none">Steam<span class="text-blue-600">Intel</span></h1>
                 <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold">Syncing Sector // {now_time}</p>
             </div>
-            <button onclick="toggleTheme()" class="group px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 transition-all hover:scale-105 active:scale-95">
+            <button onclick="toggleTheme()" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 transition-all hover:scale-105 active:scale-95">
                 <span class="dark:hidden font-black text-xs tracking-widest text-slate-600">DARK MODE</span>
                 <span class="hidden dark:inline font-black text-xs tracking-widest text-blue-400">LIGHT MODE</span>
             </button>
@@ -205,16 +175,13 @@ def update_web():
                 <h2 class="text-5xl font-black italic uppercase mb-8 tracking-tighter">Featured <span class="text-blue-600">精选资讯</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">{feat_html}</div><div class="swiper-pagination"></div></div>
             </section>
-            
             <section class="py-16 px-4 md:px-10 rounded-[3rem] border border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-white/5">
                 <h2 class="text-5xl font-black italic uppercase mb-8 tracking-tighter text-blue-600">Official <span class="dark:text-white">官方公告</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">{offi_html}</div><div class="swiper-pagination"></div></div>
             </section>
         </main>
     </div>
-
     {ticker}
-
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         if (localStorage.getItem('steam_theme') === 'light') document.documentElement.classList.remove('dark');
@@ -233,4 +200,3 @@ def update_web():
 
 if __name__ == "__main__":
     update_web()
-    print("Strategy Optimized: Active Third-party Only & Festival Priority Active.")
