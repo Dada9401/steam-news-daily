@@ -5,35 +5,31 @@ import time
 import random
 
 # ==========================================
-# 核心配置：2026 游戏行业全活动数据库 (Steam + 第三方)
+# 核心配置：2026 Steam 官方活动数据库
 # ==========================================
-ALL_EVENTS_2026 = [
-    # Steam 官方活动
-    {"name": "Steam 棋盘游戏节", "start": "20260126", "end": "20260202", "type": "steam", "url": "https://store.steampowered.com/category/tabletop"},
-    {"name": "Steam 新品节 (2月版)", "start": "20260223", "end": "20260302", "type": "steam", "url": "https://store.steampowered.com/sale/nextfest"},
-    {"name": "Steam 春季特卖", "start": "20260319", "end": "20260326", "type": "steam", "url": "https://store.steampowered.com/sale/springsale"},
-    
-    # 第三方大型游戏节/展会
-    {"name": "GDS GameDev Summit", "start": "20260203", "end": "20260205", "type": "third-party", "url": "https://gamedevsummit.com/"},
-    {"name": "D.I.C.E. Summit", "start": "20260210", "end": "20260212", "type": "third-party", "url": "https://www.interactive.org/"},
-    {"name": "GDC 2026", "start": "20260309", "end": "20260313", "type": "third-party", "url": "https://gdconf.com/"},
-    {"name": "PAX East 2026", "start": "20260326", "end": "20260329", "type": "third-party", "url": "https://east.paxsite.com/"},
-    {"name": "Summer Game Fest", "start": "20260605", "end": "20260608", "type": "third-party", "url": "https://www.summergamefest.com/"},
-    {"name": "Gamescom 2026", "start": "20260826", "end": "20260830", "type": "third-party", "url": "https://www.gamescom.global/"},
-    {"name": "Tokyo Game Show (TGS)", "start": "20260917", "end": "20260921", "type": "third-party", "url": "https://tgs.nikkeibp.co.jp/"},
+STEAM_EVENTS_2026 = [
+    {"name": "棋盘游戏节", "start": "20260126", "end": "20260202", "type": "fest"},
+    {"name": "打字节 (焦点节)", "start": "20260205", "end": "20260209", "type": "spotlight"},
+    {"name": "PvP 游戏节", "start": "20260209", "end": "20260216", "type": "fest"},
+    {"name": "Steam 新品节 (2月版)", "start": "20260223", "end": "20260302", "type": "nextfest", "appid": "3985950"},
+    {"name": "Steam 春季特卖", "start": "20260319", "end": "20260326", "type": "major"},
+    {"name": "Steam 新品节 (6月版)", "start": "20260615", "end": "20260622", "type": "nextfest"},
+    {"name": "Steam 夏季特卖", "start": "20260625", "end": "20260709", "type": "major"},
 ]
 
 def generate_timeline_html():
     now = datetime.datetime.now()
     curr_int = int(now.strftime("%Y%m%d"))
+    # 顶部 Roadmap：仅 Steam 官方，按时间排序
+    steam_events = [e for e in ALL_EVENTS_2026 if e['type'] == 'steam' and int(e['end']) >= curr_int]
+    steam_events.sort(key=lambda x: x['start'])
+    
     html = '<div class="flex flex-nowrap gap-4 overflow-x-auto pb-6 mb-10 no-scrollbar select-none">'
-    # 仅展示 Steam 官方排期作为 Roadmap
-    upcoming = [e for e in ALL_EVENTS_2026 if e['type'] == 'steam' and int(e['end']) >= curr_int][:8]
-    for e in upcoming:
+    for e in steam_events[:8]:
         active = int(e['start']) <= curr_int <= int(e['end'])
         color = "emerald-500" if active else "blue-500"
         html += f'''
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
+        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 shadow-sm">
             <div class="flex justify-between items-center mb-3">
                 <span class="text-[9px] font-black tracking-tighter {'text-emerald-500 animate-pulse' if active else 'text-slate-400'} uppercase">{'● ACTIVE' if active else '○ PENDING'}</span>
                 <span class="text-[10px] font-mono text-slate-400">{e['start'][4:6]}-{e['start'][6:]}</span>
@@ -46,55 +42,72 @@ def generate_timeline_html():
     return html + '</div>'
 
 def generate_active_ticker():
-    """综合检测 Steam 和 第三方活动并生成底部滚动条"""
+    """滚动条逻辑：第三方活动必须是已开展状态才显示"""
     now = datetime.datetime.now()
     curr_int = int(now.strftime("%Y%m%d"))
-    # 检测正在进行或 3 天内即将开始的活动
-    active_events = [e for e in ALL_EVENTS_2026 if int(e['start']) <= curr_int <= int(e['end']) or (0 < int(e['start']) - curr_int <= 3)]
     
-    if not active_events:
-        return ""
+    # 规则：Steam活动（正在进行或3天内即将开始）；第三方活动（必须正在进行）
+    active_events = []
+    for e in ALL_EVENTS_2026:
+        is_active = int(e['start']) <= curr_int <= int(e['end'])
+        is_upcoming_steam = e['type'] == 'steam' and (0 < int(e['start']) - curr_int <= 3)
+        
+        if is_active or is_upcoming_steam:
+            active_events.append(e)
+    
+    if not active_events: return ""
 
     contents = []
     for e in active_events:
-        is_starting = int(e['start']) > curr_int
-        prefix = "⏳ 即将开始" if is_starting else "🔥 正在进行"
+        prefix = "🔥 正在进行" if int(e['start']) <= curr_int else "⏳ 即将开始"
         tag = "[第三方]" if e['type'] == 'third-party' else "[Steam]"
-        contents.append(f"{prefix}: {tag} {e['name']} | <a href='{e.get('url','#')}' target='_blank' class='underline decoration-wavy'>详情链接</a>")
+        contents.append(f"{prefix}: {tag} {e['name']} | <a href='{e.get('url','#')}' target='_blank' class='underline decoration-wavy'>进入会场</a>")
 
     ticker_text = " ——— ".join(contents)
     return f'''
-    <div class="fixed bottom-0 left-0 w-full bg-blue-700 text-white py-2 z-[100] overflow-hidden whitespace-nowrap border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+    <div class="fixed bottom-0 left-0 w-full bg-blue-700 text-white py-2 z-[100] overflow-hidden whitespace-nowrap border-t border-white/20 shadow-2xl">
         <div class="inline-block animate-marquee px-4">
             <span class="font-black italic text-xs tracking-[0.2em] uppercase">{ticker_text} ——— {ticker_text}</span>
         </div>
-    </div>
-    '''
+    </div>'''
 
 def get_steam_rss_data(mode, exclude_links=None):
     if exclude_links is None: exclude_links = set()
     source_map = {
         "featured": ["https://store.steampowered.com/feeds/news/collection/featured/?l=schinese"],
-        "official": [
-            "https://store.steampowered.com/feeds/news/collection/steam/?l=schinese",
-            "https://store.steampowered.com/feeds/news/group/39049601/?l=schinese"
-        ]
+        "official": ["https://store.steampowered.com/feeds/news/collection/steam/?l=schinese", "https://store.steampowered.com/feeds/news/group/39049601/?l=schinese"]
     }
     
     entries = []
     seen_links = set()
-    timestamp = int(time.time())
+    now_date = datetime.datetime.now().strftime("%m-%d")
 
     for url in source_map.get(mode, []):
         try:
-            feed = feedparser.parse(f"{url}&refresh={timestamp}&v={random.random()}")
+            feed = feedparser.parse(f"{url}&v={random.random()}")
             for e in feed.entries:
                 if e.link not in seen_links and e.link not in exclude_links:
                     entries.append(e)
                     seen_links.add(e.link)
         except: continue
 
-    entries.sort(key=lambda x: time.mktime(x.get('published_parsed', time.gmtime(0))), reverse=True)
+    def get_priority_score(entry):
+        # 基础分：发布时间戳
+        score = time.mktime(entry.get('published_parsed', time.gmtime(0)))
+        title = entry.title.lower()
+        pub_date = time.strftime("%m-%d", entry.published_parsed) if hasattr(entry, 'published_parsed') else ""
+        
+        is_fest = any(k in title for k in ["游戏节", "festival", "fest", "新品节"])
+        is_today = (pub_date == now_date)
+        
+        # 权重叠加：今日 + 游戏节 > 历史 + 游戏节 > 普通新闻
+        if is_fest:
+            score += 10**10 
+            if is_today:
+                score += 10**11 # 最高权重
+        return score
+
+    entries.sort(key=get_priority_score, reverse=True)
 
     slides_html = ""
     for e in entries[:10]:
@@ -105,14 +118,25 @@ def get_steam_rss_data(mode, exclude_links=None):
         img_url = img.group(1) if img else "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg"
         pub_time = time.strftime("%m-%d %H:%M", e.published_parsed) if hasattr(e, 'published_parsed') else "RECENT"
         
+        # 判断是否需要发光边框 (今日游戏节新闻)
+        is_fest = any(k in title.lower() for k in ["游戏节", "festival", "fest"])
+        is_today = (time.strftime("%m-%d", e.published_parsed) == now_date) if hasattr(e, 'published_parsed') else False
+        
+        highlight_class = ""
+        if is_fest and is_today:
+            highlight_class = "ring-4 ring-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.5)] animate-pulse"
+
         slides_html += f'''
         <div class="swiper-slide group cursor-pointer" onclick="window.open('{link}', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500 {highlight_class}">
                 <img src="{img_url}" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-90"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">{pub_time}</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">{title}</h2>
+                    <div class="flex items-center gap-2 mb-2">
+                        {"<span class='bg-emerald-500 text-white text-[9px] px-2 py-0.5 rounded italic font-black'>TODAY FESTIVAL</span>" if is_fest and is_today else ""}
+                        <span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest">{pub_time}</span>
+                    </div>
+                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight italic">{title}</h2>
                 </div>
             </div>
         </div>'''
@@ -122,7 +146,6 @@ def update_web():
     now_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     timeline = generate_timeline_html()
     ticker = generate_active_ticker()
-    
     feat_html, used_links = get_steam_rss_data("featured")
     offi_html, _ = get_steam_rss_data("official", exclude_links=used_links)
 
@@ -138,7 +161,7 @@ def update_web():
             darkMode: 'class',
             theme: {{
                 extend: {{
-                    animation: {{ 'marquee': 'marquee 30s linear infinite' }},
+                    animation: {{ 'marquee': 'marquee 35s linear infinite' }},
                     keyframes: {{ marquee: {{ '0%': {{ transform: 'translateX(0%)' }}, '100%': {{ transform: 'translateX(-50%)' }} }} }}
                 }}
             }}
@@ -150,18 +173,18 @@ def update_web():
     </script>
     <style>
         .no-scrollbar::-webkit-scrollbar {{ display: none; }}
-        .swiper {{ width: 100%; height: 520px; padding: 20px 0 100px 0; overflow: visible !important; }}
-        .swiper-slide {{ width: 550px; opacity: 0.1; transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); transform: scale(0.8); filter: blur(8px); }}
-        .swiper-slide-active {{ opacity: 1; transform: scale(1.05); filter: blur(0); z-index: 20; }}
-        .section-box {{ background: rgba(148, 163, 184, 0.05); backdrop-filter: blur(10px); }}
+        .swiper {{ width: 100%; height: 500px; padding: 20px 0 80px 0; overflow: visible !important; }}
+        .swiper-slide {{ width: 550px; opacity: 0.1; transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); transform: scale(0.85); filter: blur(4px); }}
+        .swiper-slide-active {{ opacity: 1; transform: scale(1); filter: blur(0); z-index: 20; }}
+        body {{ transition: background-color 0.5s; }}
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen">
+<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen pb-32">
     <div class="max-w-[1500px] mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
             <div class="text-center md:text-left">
-                <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none text-slate-900 dark:text-white">Steam<span class="text-blue-600">Intel</span></h1>
-                <p class="text-[11px] text-blue-600 dark:text-blue-500 font-mono mt-4 tracking-[0.5em] uppercase font-bold opacity-80">Terminal Hub // {now_time}</p>
+                <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none">Steam<span class="text-blue-600">Intel</span></h1>
+                <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold">Syncing Sector // {now_time}</p>
             </div>
             <button onclick="toggleTheme()" class="group px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 transition-all hover:scale-105 active:scale-95">
                 <span class="dark:hidden font-black text-xs tracking-widest text-slate-600">DARK MODE</span>
@@ -169,22 +192,22 @@ def update_web():
             </button>
         </header>
 
-        <section class="mb-24">
+        <section class="mb-20">
             <div class="flex items-center gap-4 mb-10">
-                <span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase italic">Steam Roadmap</span>
+                <span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase italic">Official Roadmap</span>
                 <div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div>
             </div>
             {timeline}
         </section>
 
-        <main class="space-y-40">
+        <main class="space-y-32">
             <section>
-                <h2 class="text-5xl font-black italic uppercase mb-12 tracking-tighter">Featured <span class="text-blue-600">精选资讯</span></h2>
+                <h2 class="text-5xl font-black italic uppercase mb-8 tracking-tighter">Featured <span class="text-blue-600">精选资讯</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">{feat_html}</div><div class="swiper-pagination"></div></div>
             </section>
             
-            <section class="py-20 px-4 md:px-12 rounded-[4rem] border border-slate-200 dark:border-white/5 section-box">
-                <h2 class="text-5xl font-black italic uppercase mb-12 tracking-tighter text-blue-600">Official <span class="dark:text-white">官方公告</span></h2>
+            <section class="py-16 px-4 md:px-10 rounded-[3rem] border border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-white/5">
+                <h2 class="text-5xl font-black italic uppercase mb-8 tracking-tighter text-blue-600">Official <span class="dark:text-white">官方公告</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">{offi_html}</div><div class="swiper-pagination"></div></div>
             </section>
         </main>
@@ -198,8 +221,8 @@ def update_web():
         document.querySelectorAll('.mySwiper').forEach(el => {{
             new Swiper(el, {{
                 effect: "coverflow", centeredSlides: true, slidesPerView: "auto", loop: true,
-                autoplay: {{ delay: 5000, disableOnInteraction: false }},
-                coverflowEffect: {{ rotate: 0, stretch: 100, depth: 150, modifier: 1.5, slideShadows: false }},
+                autoplay: {{ delay: 6000, disableOnInteraction: false }},
+                coverflowEffect: {{ rotate: 0, stretch: 80, depth: 150, modifier: 1.2, slideShadows: false }},
                 pagination: {{ el: el.querySelector('.swiper-pagination'), clickable: true }}
             }});
         }});
@@ -210,4 +233,4 @@ def update_web():
 
 if __name__ == "__main__":
     update_web()
-    print("Update Complete: Theme toggle restored & Global festivals added to ticker.")
+    print("Strategy Optimized: Active Third-party Only & Festival Priority Active.")
