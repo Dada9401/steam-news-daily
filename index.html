@@ -1,316 +1,77 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <title>STEAM INTEL CENTER</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { 
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    animation: { 'marquee': 'marquee 30s linear infinite' },
-                    keyframes: { marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } } }
-                }
-            }
-        }
-        function toggleTheme() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('steam_theme', isDark ? 'dark' : 'light');
-        }
-    </script>
-    <style>
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .swiper { width: 100%; height: 520px; padding: 20px 0 100px 0; overflow: visible !important; }
-        .swiper-slide { width: 550px; opacity: 0.1; transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); transform: scale(0.8); filter: blur(8px); }
-        .swiper-slide-active { opacity: 1; transform: scale(1.05); filter: blur(0); z-index: 20; }
-        .section-box { background: rgba(148, 163, 184, 0.05); backdrop-filter: blur(10px); }
-    </style>
-</head>
-<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen">
-    <div class="max-w-[1500px] mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
-            <div class="text-center md:text-left">
-                <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none text-slate-900 dark:text-white">Steam<span class="text-blue-600">Intel</span></h1>
-                <p class="text-[11px] text-blue-600 dark:text-blue-500 font-mono mt-4 tracking-[0.5em] uppercase font-bold opacity-80">Terminal Hub // 2026-02-02 08:55</p>
+<html lang="zh-CN" class="dark"><head><meta charset="UTF-8"><title>STEAM INTEL</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /><script src="https://cdn.tailwindcss.com"></script><script>tailwind.config = { darkMode: 'class', theme: { extend: { animation: { 'marquee': 'marquee 40s linear infinite' }, keyframes: { marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } } } } } }</script><style>.no-scrollbar::-webkit-scrollbar { display: none; } .swiper { width: 100%; height: 540px; padding: 20px 0 100px 0; overflow: visible !important; } .swiper-slide { width: 580px; opacity: 0.1; transition: 0.8s; transform: scale(0.8); filter: blur(4px); } .swiper-slide-active { opacity: 1; transform: scale(1); filter: blur(0); z-index: 20; }</style></head>
+<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen pb-32"><div class="max-w-[1500px] mx-auto"><header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8"><div class="text-center md:text-left"><h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none">Steam<span class="text-blue-600">Intel</span></h1><p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold opacity-80">Sector Monitoring // 2026-02-02 09:15</p></div><button onclick="document.documentElement.classList.toggle('dark')" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 font-bold text-xs">TOGGLE DARK MODE</button></header>
+<section class="mb-24"><div class="flex items-center gap-4 mb-10"><span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase italic">Official Roadmap</span><div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div></div><div class="flex flex-nowrap gap-4 overflow-x-auto pb-6 mb-10 no-scrollbar select-none">
+        <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[10px] font-black tracking-widest text-emerald-500 animate-pulse uppercase">● ACTIVE</span>
+                <span class="text-[10px] font-mono text-slate-400">01/26</span>
             </div>
-            <button onclick="toggleTheme()" class="group px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 transition-all hover:scale-105 active:scale-95">
-                <span class="dark:hidden font-black text-xs tracking-widest text-slate-600">DARK MODE</span>
-                <span class="hidden dark:inline font-black text-xs tracking-widest text-blue-400">LIGHT MODE</span>
-            </button>
-        </header>
-
-        <section class="mb-24">
-            <div class="flex items-center gap-4 mb-10">
-                <span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase italic">Steam Roadmap</span>
-                <div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div>
-            </div>
-            <div class="flex flex-nowrap gap-4 overflow-x-auto pb-6 mb-10 no-scrollbar select-none">
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-emerald-500 animate-pulse uppercase">● ACTIVE</span>
-                <span class="text-[10px] font-mono text-slate-400">01-26</span>
-            </div>
-            <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">Steam 棋盘游戏节</div>
-            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+            <div class="text-base font-bold text-slate-800 dark:text-slate-100 truncate mb-4">棋盘游戏节</div>
+            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-emerald-500" style="width: 100%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ PENDING</span>
-                <span class="text-[10px] font-mono text-slate-400">02-23</span>
+        <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[10px] font-black tracking-widest text-slate-400 uppercase">○ PENDING</span>
+                <span class="text-[10px] font-mono text-slate-400">02/05</span>
             </div>
-            <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">Steam 新品节 (2月版)</div>
-            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-500" style="width: 20%"></div>
-            </div>
-        </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ PENDING</span>
-                <span class="text-[10px] font-mono text-slate-400">03-19</span>
-            </div>
-            <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">Steam 春季特卖</div>
-            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-500" style="width: 20%"></div>
-            </div>
-        </div></div>
-        </section>
-
-        <main class="space-y-40">
-            <section>
-                <h2 class="text-5xl font-black italic uppercase mb-12 tracking-tighter">Featured <span class="text-blue-600">精选资讯</span></h2>
-                <div class="swiper mySwiper"><div class="swiper-wrapper">
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1588550/view/493841450487776602', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://clan.akamai.steamstatic.com/images/45050904/bba2a5e661ad67ef3fe056c598d414f1e2cbd453.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">02-01 20:45</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Thank you for 200,000 climbers!</h2>
-                </div>
+            <div class="text-base font-bold text-slate-800 dark:text-slate-100 truncate mb-4">打字节 (焦点节)</div>
+            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-600" style="width: 20%"></div>
             </div>
         </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/3472040/view/520863048256193637', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://clan.akamai.steamstatic.com/images/45693118/96aefc31abe586669d41703b5087aed4a0ef6cd1.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">02-01 20:23</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Greatness Challenges Live</h2>
-                </div>
+        <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[10px] font-black tracking-widest text-slate-400 uppercase">○ PENDING</span>
+                <span class="text-[10px] font-mono text-slate-400">02/09</span>
+            </div>
+            <div class="text-base font-bold text-slate-800 dark:text-slate-100 truncate mb-4">PvP 游戏节</div>
+            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-600" style="width: 20%"></div>
             </div>
         </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/2956680/view/494967350396715827', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://clan.akamai.steamstatic.com/images/45635907/ef9df1c35526833cd2f0a090125da7e2f99f4223.png" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-31 20:57</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">销量突破 25 万！</h2>
-                </div>
+        <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[10px] font-black tracking-widest text-slate-400 uppercase">○ PENDING</span>
+                <span class="text-[10px] font-mono text-slate-400">02/23</span>
+            </div>
+            <div class="text-base font-bold text-slate-800 dark:text-slate-100 truncate mb-4">Steam 新品节 (2月版)</div>
+            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-600" style="width: 20%"></div>
             </div>
         </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/2397300/view/533247947228316809', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-31 17:56</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Hotfix 2: Character Creation & starting Slums optimization</h2>
-                </div>
+        <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[10px] font-black tracking-widest text-slate-400 uppercase">○ PENDING</span>
+                <span class="text-[10px] font-mono text-slate-400">03/19</span>
+            </div>
+            <div class="text-base font-bold text-slate-800 dark:text-slate-100 truncate mb-4">Steam 春季特卖</div>
+            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-600" style="width: 20%"></div>
             </div>
         </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1222670/view/500596849929880692', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://clan.akamai.steamstatic.com/images/38096876/b8970422b2767a50b895a18c751538f9959591e4.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-31 17:00</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">The Sims™ 4 Lunar New Year Sale</h2>
-                </div>
+        <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[10px] font-black tracking-widest text-slate-400 uppercase">○ PENDING</span>
+                <span class="text-[10px] font-mono text-slate-400">06/15</span>
+            </div>
+            <div class="text-base font-bold text-slate-800 dark:text-slate-100 truncate mb-4">Steam 新品节 (6月版)</div>
+            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-600" style="width: 20%"></div>
             </div>
         </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/270880/view/508478149279875825', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://clan.akamai.steamstatic.com/images/4036972/4fac3f930f2718abaf746ff29aea0c90c1059c39.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-31 16:00</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Road Trip: Meet the Team</h2>
-                </div>
+        <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[10px] font-black tracking-widest text-slate-400 uppercase">○ PENDING</span>
+                <span class="text-[10px] font-mono text-slate-400">06/25</span>
             </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/32941522/view/517484714079027366', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://clan.akamai.steamstatic.com/images/32941522/fd611158edb4564af9eeeb74e0a37cc03aa19a63.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-31 01:30</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Welcome to the Bridge Constructor Franchise Sale 2026!</h2>
-                </div>
+            <div class="text-base font-bold text-slate-800 dark:text-slate-100 truncate mb-4">Steam 夏季特卖</div>
+            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-600" style="width: 20%"></div>
             </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/236390/view/530996147414630456', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://clan.akamai.steamstatic.com/images/4649813/38826519ec36b98dc48d48b2fb70507774620c7b.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-30 15:43</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">史海拾遗·二月：血战硫磺岛</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/39210/view/529870247508836873', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://clan.akamai.steamstatic.com/images/4459756/8d972d33766c14735c6a4eadc6b01cf139bfe3d9.png" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-29 15:00</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Valentione's Day Comes to Eorzea on February 2!</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/44794657/view/500594947381003217', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://clan.akamai.steamstatic.com/images/44794657/45fb314ba0055b9d33df01a55d468ef4699f9acc.png" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-29 07:44</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">再来一局 游戏节 2026</h2>
-                </div>
-            </div>
-        </div></div><div class="swiper-pagination"></div></div>
-            </section>
-            
-            <section class="py-20 px-4 md:px-12 rounded-[4rem] border border-slate-200 dark:border-white/5 section-box">
-                <h2 class="text-5xl font-black italic uppercase mb-12 tracking-tighter text-blue-600">Official <span class="dark:text-white">官方公告</span></h2>
-                <div class="swiper mySwiper"><div class="swiper-wrapper">
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/499470950023037988', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-31 01:47</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Steam Deck Beta Client Update: January 30th</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4397053/view/540003346670421020', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-31 01:47</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Steam Client Beta - January 30th</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/511855214544815767', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-27 01:25</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Steam Deck 测试版客户端更新 - 1 月 26 日</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4397053/view/503973915196917559', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-27 01:24</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Steam Client Beta - January 26th</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/593110/view/541128612120628472', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://steamcommunity.com/public/shared/images/responsive/youtube_16x9_placeholder.gif" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">01-26 21:06</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">Steam 棋盘游戏节开始了！</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/589535332141108060', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">12-18 17:45</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">冬季特卖精选深度折扣</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/516348030198219501', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">10-20 18:32</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">“Steam 新品节：2025 年 10 月版”的最热玩试用版</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/516349298458230876', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">10-13 16:48</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">2025 年 10 月版新品节 - 火热进行中！</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/516348030198219157', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">10-02 17:14</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">新品节 2025 年 10 月版 - 开发者预览</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/644691200809370217', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="mb-2 uppercase font-mono text-[10px] text-blue-400 font-bold tracking-widest">08-12 19:54</div>
-                    <h2 class="text-xl font-black text-white line-clamp-2 leading-tight tracking-tighter italic">“Steam 新品节： 2025 年 10 月版”- 即将隆重登场</h2>
-                </div>
-            </div>
-        </div></div><div class="swiper-pagination"></div></div>
-            </section>
-        </main>
-    </div>
-
-    
-    <div class="fixed bottom-0 left-0 w-full bg-blue-700 text-white py-2 z-[100] overflow-hidden whitespace-nowrap border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
-        <div class="inline-block animate-marquee px-4">
-            <span class="font-black italic text-xs tracking-[0.2em] uppercase">🔥 正在进行: [Steam] Steam 棋盘游戏节 | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='underline decoration-wavy'>详情链接</a> ——— ⏳ 即将开始: [第三方] GDS GameDev Summit | <a href='https://gamedevsummit.com/' target='_blank' class='underline decoration-wavy'>详情链接</a> ——— 🔥 正在进行: [Steam] Steam 棋盘游戏节 | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='underline decoration-wavy'>详情链接</a> ——— ⏳ 即将开始: [第三方] GDS GameDev Summit | <a href='https://gamedevsummit.com/' target='_blank' class='underline decoration-wavy'>详情链接</a></span>
-        </div>
-    </div>
-    
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        if (localStorage.getItem('steam_theme') === 'light') document.documentElement.classList.remove('dark');
-        document.querySelectorAll('.mySwiper').forEach(el => {
-            new Swiper(el, {
-                effect: "coverflow", centeredSlides: true, slidesPerView: "auto", loop: true,
-                autoplay: { delay: 5000, disableOnInteraction: false },
-                coverflowEffect: { rotate: 0, stretch: 100, depth: 150, modifier: 1.5, slideShadows: false },
-                pagination: { el: el.querySelector('.swiper-pagination'), clickable: true }
-            });
-        });
-    </script>
-</body>
-</html>
+        </div></div></section>
+<main class="space-y-40"><section><h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter">Featured <span class="text-blue-600">精选资讯</span></h2><div class="swiper mySwiper"><div class="swiper-wrapper"><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/44794657/view/500594947381003217', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://clan.fastly.steamstatic.com/images/44794657/45fb314ba0055b9d33df01a55d468ef4699f9acc.png" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-29 07:44</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">再来一局 游戏节 2026</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1588550/view/493841450487776602', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://clan.fastly.steamstatic.com/images/45050904/bba2a5e661ad67ef3fe056c598d414f1e2cbd453.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">02-01 20:45</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Thank you for 200,000 climbers!</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/3472040/view/520863048256193637', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://clan.fastly.steamstatic.com/images/45693118/96aefc31abe586669d41703b5087aed4a0ef6cd1.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">02-01 20:23</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Greatness Challenges Live</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/2956680/view/494967350396715827', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://clan.fastly.steamstatic.com/images/45635907/ef9df1c35526833cd2f0a090125da7e2f99f4223.png" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-31 20:57</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">销量突破 25 万！</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/2397300/view/533247947228316809', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-31 17:56</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Hotfix 2: Character Creation & starting Slums optimization</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1222670/view/500596849929880692', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://clan.fastly.steamstatic.com/images/38096876/b8970422b2767a50b895a18c751538f9959591e4.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-31 17:00</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">The Sims™ 4 Lunar New Year Sale</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/270880/view/508478149279875825', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://clan.fastly.steamstatic.com/images/4036972/4fac3f930f2718abaf746ff29aea0c90c1059c39.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-31 16:00</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Road Trip: Meet the Team</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/32941522/view/517484714079027366', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://clan.fastly.steamstatic.com/images/32941522/fd611158edb4564af9eeeb74e0a37cc03aa19a63.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-31 01:30</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Welcome to the Bridge Constructor Franchise Sale 2026!</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/236390/view/530996147414630456', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://clan.fastly.steamstatic.com/images/4649813/38826519ec36b98dc48d48b2fb70507774620c7b.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-30 15:43</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">史海拾遗·二月：血战硫磺岛</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/39210/view/529870247508836873', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://clan.fastly.steamstatic.com/images/4459756/8d972d33766c14735c6a4eadc6b01cf139bfe3d9.png" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-29 15:00</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Valentione's Day Comes to Eorzea on February 2!</h2></div></div></div></div><div class="swiper-pagination"></div></div></section>
+<section class="py-20 px-8 md:px-12 rounded-[4rem] border border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-white/5"><h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter text-blue-600">Official <span class="dark:text-white">官方公告</span></h2><div class="swiper mySwiper"><div class="swiper-wrapper"><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/593110/view/541128612120628472', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://steamcommunity.com/public/shared/images/responsive/youtube_16x9_placeholder.gif" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-26 21:06</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Steam 棋盘游戏节开始了！</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/499470950023037988', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-31 01:47</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Steam Deck Beta Client Update: January 30th</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4397053/view/540003346670421020', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-31 01:47</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Steam Client Beta - January 30th</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/511855214544815767', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-27 01:25</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Steam Deck 测试版客户端更新 - 1 月 26 日</h2></div></div></div><div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4397053/view/503973915196917559', '_blank')"><div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 "><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div><div class="absolute bottom-0 p-8 w-full"><div class="flex items-center gap-3 mb-3"><span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">01-27 01:24</span></div><h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">Steam Client Beta - January 26th</h2></div></div></div></div><div class="swiper-pagination"></div></div></section></main></div><div class="fixed bottom-0 left-0 w-full bg-blue-700 text-white py-2.5 z-[100] overflow-hidden whitespace-nowrap"><div class="inline-block animate-marquee px-4"><span class="font-black italic text-xs tracking-widest uppercase">🔥 正在进行: [Steam] 棋盘游戏节 ——— ⏳ 即将开始: [Steam] 打字节 (焦点节) ——— 🔥 正在进行: [Steam] 棋盘游戏节 ——— ⏳ 即将开始: [Steam] 打字节 (焦点节)</span></div></div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script><script>document.querySelectorAll('.mySwiper').forEach(el => { new Swiper(el, { effect: "coverflow", centeredSlides: true, slidesPerView: "auto", loop: true, autoplay: { delay: 6000, disableOnInteraction: false }, coverflowEffect: { rotate: 0, stretch: 100, depth: 150, modifier: 1.2, slideShadows: false }, pagination: { el: el.querySelector('.swiper-pagination'), clickable: true } }); });</script></body></html>
