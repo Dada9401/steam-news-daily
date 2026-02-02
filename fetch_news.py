@@ -25,78 +25,76 @@ def generate_timeline_html():
     for e in upcoming:
         active = int(e['start']) <= curr_int <= int(e['end'])
         color = {"major": "red-500", "nextfest": "emerald-500", "spotlight": "purple-500"}.get(e['type'], "blue-500")
-        
         html += f'''
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-white/10 transition-all duration-500 shadow-sm">
+        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter {'text-emerald-500 animate-pulse' if active else 'text-slate-400'} uppercase">{'● LIVE NOW' if active else '○ SCHEDULED'}</span>
+                <span class="text-[9px] font-black tracking-tighter {'text-emerald-500 animate-pulse' if active else 'text-slate-400'} uppercase">{'● ACTIVE' if active else '○ PENDING'}</span>
                 <span class="text-[10px] font-mono text-slate-400">{e['start'][4:6]}-{e['start'][6:]}</span>
             </div>
             <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">{e['name']}</div>
-            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-{color} {'shadow-[0_0_8px] shadow-'+color if active else 'opacity-20'}" style="width: {'100%' if active else '20%'}"></div>
             </div>
         </div>'''
     return html + '</div>'
 
 def get_steam_rss_data(mode):
-    # 使用多个冗余源确保“最新”
     source_map = {
-        "featured": [
-            "https://store.steampowered.com/feeds/news/collection/featured/?l=schinese"
-        ],
+        "featured": ["https://store.steampowered.com/feeds/news/collection/featured/?l=schinese"],
         "official": [
             "https://store.steampowered.com/feeds/news/collection/steam/?l=schinese",
-            "https://store.steampowered.com/feeds/news/group/39049601/?l=schinese", # 官方博客
-            "https://store.steampowered.com/feeds/news/group/4145017/?l=schinese"  # Steamworks
+            "https://store.steampowered.com/feeds/news/group/39049601/?l=schinese"
         ]
     }
     
-    urls = source_map.get(mode, [])
     entries = []
     seen_links = set()
-    
-    # 随机化参数击穿缓存
     timestamp = int(time.time())
-    nonce = random.randint(1000, 9999)
 
-    for url in urls:
+    for url in source_map.get(mode, []):
         try:
-            # 模拟浏览器请求头在部分 feedparser 版本中需配合 urllib 使用，这里直接在 URL 后加参数最有效
-            feed = feedparser.parse(f"{url}&nocache={timestamp}&v={nonce}")
+            # 引入随机版本号，彻底击穿缓存
+            feed = feedparser.parse(f"{url}&refresh={timestamp}&v={random.random()}")
             for e in feed.entries:
                 if e.link not in seen_links:
                     entries.append(e)
                     seen_links.add(e.link)
         except: continue
 
-    # 排序逻辑：将具有 published_parsed 的项按时间戳倒序排列
-    entries.sort(key=lambda x: x.get('published_parsed', time.gmtime(0)), reverse=True)
+    # 核心：加权排序算法
+    def get_sort_score(entry):
+        pub_time = time.mktime(entry.get('published_parsed', time.gmtime(0)))
+        title = entry.title.lower()
+        # 关键词权重识别
+        is_fest = any(k in title for k in ["游戏节", "festival", "fest", "新品节"])
+        # 如果是游戏节，权重级别提升 (10^10)，确保其在顶端，同时在顶端内仍按时间排序
+        return (10000000000 if is_fest and mode == "featured" else 0) + pub_time
+
+    entries.sort(key=get_sort_score, reverse=True)
 
     slides_html = ""
     for e in entries[:10]:
-        title = e.title
-        link = e.link
+        title, link = e.title, e.link
         content = e.get('summary', '') or e.get('description', '')
-        
-        # 配图提取
         img = re.search(r'<img [^>]*src="([^"]+)"', content)
         img_url = img.group(1) if img else "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg"
+        pub_time = time.strftime("%m-%d %H:%M", e.published_parsed) if hasattr(e, 'published_parsed') else "RECENT"
         
-        # 转换发布时间
-        pub_time = time.strftime("%m/%d %H:%M", e.published_parsed) if hasattr(e, 'published_parsed') else "RECENT"
+        # 游戏节高亮标签
+        is_fest = any(k in title.lower() for k in ["游戏节", "festival", "fest"])
+        fest_tag = '<span class="bg-emerald-500 text-white text-[9px] px-2 py-0.5 rounded mr-2 animate-pulse">FESTIVAL</span>' if is_fest else ""
         
         slides_html += f'''
         <div class="swiper-slide group cursor-pointer" onclick="window.open('{link}', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="{img_url}" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border { "border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.2)]" if is_fest else "border-slate-200 dark:border-white/5" } transition-all duration-500">
+                <img src="{img_url}" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">{pub_time}</span>
+                        {fest_tag}
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">{pub_time} SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">{title}</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">{title}</h2>
                 </div>
             </div>
         </div>'''
@@ -105,93 +103,81 @@ def get_steam_rss_data(mode):
 def update_web():
     now_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     timeline = generate_timeline_html()
-    feat_slides = get_steam_rss_data("featured")
-    offi_slides = get_steam_rss_data("official")
+    feat = get_steam_rss_data("featured")
+    offi = get_steam_rss_data("official")
 
     template = f'''<!DOCTYPE html>
 <html lang="zh-CN" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>STEAM INTEL NODE // 2026</title>
+    <title>STEAM INTEL CENTER</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {{ darkMode: 'class' }}
         function toggleTheme() {{
-            const html = document.documentElement;
-            const isDark = html.classList.toggle('dark');
+            const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('steam_theme', isDark ? 'dark' : 'light');
         }}
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
-        body {{ font-family: 'Space Grotesk', sans-serif; transition: background-color 0.5s ease; }}
         .no-scrollbar::-webkit-scrollbar {{ display: none; }}
-        .swiper {{ width: 100%; padding: 20px 0 80px 0; overflow: visible !important; }}
-        .swiper-slide {{ width: 500px; opacity: 0.15; filter: blur(10px) scale(0.85); transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); }}
-        .swiper-slide-active {{ opacity: 1; filter: blur(0) scale(1); z-index: 20; }}
-        .swiper-pagination-bullet {{ background: #3b82f6 !important; }}
+        .swiper {{ width: 100%; height: 520px; padding: 20px 0 100px 0; overflow: visible !important; }}
+        .swiper-slide {{ width: 550px; opacity: 0.1; transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); transform: scale(0.8); filter: blur(10px); }}
+        .swiper-slide-active {{ opacity: 1; transform: scale(1); filter: blur(0); z-index: 20; }}
+        body {{ transition: background-color 0.6s ease; }}
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen p-6 md:p-16">
-    <div class="max-w-[1400px] mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16">
-            <div class="border-l-4 border-blue-600 pl-6">
-                <h1 class="text-5xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">Steam<span class="text-blue-600">Intel</span></h1>
-                <p class="text-[10px] font-mono text-blue-500 mt-2 tracking-[0.4em] uppercase font-bold">Node Connected // {now_time}</p>
+<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen">
+    <div class="max-w-[1500px] mx-auto">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
+            <div class="text-center md:text-left">
+                <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none text-slate-900 dark:text-white">Steam<span class="text-blue-600">Intel</span></h1>
+                <p class="text-[11px] text-blue-600 dark:text-blue-500 font-mono mt-4 tracking-[0.5em] uppercase font-bold opacity-80">Terminal Hub // {now_time}</p>
             </div>
-            <button onclick="toggleTheme()" class="mt-6 md:mt-0 group flex items-center gap-3 px-6 py-3 bg-white dark:bg-slate-900 rounded-full shadow-lg border border-slate-200 dark:border-white/5 transition-all hover:scale-105 active:scale-95">
-                <div class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></div>
-                <span class="text-xs font-black tracking-widest uppercase dark:hidden">Switch to Dark</span>
-                <span class="text-xs font-black tracking-widest uppercase hidden dark:inline text-blue-400">Switch to Light</span>
+            <button onclick="toggleTheme()" class="group px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 transition-all hover:scale-105 active:scale-95">
+                <span class="dark:hidden font-black text-xs tracking-widest text-slate-600">DARK MODE</span>
+                <span class="hidden dark:inline font-black text-xs tracking-widest text-blue-400">LIGHT MODE</span>
             </button>
         </header>
 
-        <section class="mb-20">
-            <div class="flex items-center gap-4 mb-8">
-                <h2 class="text-xs font-black text-blue-600 uppercase tracking-widest">2026 Roadmap</h2>
+        <section class="mb-24">
+            <div class="flex items-center gap-4 mb-10">
+                <span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase">Operational Roadmap</span>
                 <div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div>
             </div>
             {timeline}
         </section>
 
-        <main class="space-y-24">
+        <main class="space-y-32">
             <section>
-                <h3 class="text-3xl font-black italic uppercase mb-8 tracking-tighter">Featured <span class="text-blue-600">精选资讯</span></h3>
-                <div class="swiper mySwiper"><div class="swiper-wrapper">{feat_slides}</div><div class="swiper-pagination"></div></div>
+                <h2 class="text-4xl font-black italic uppercase mb-12 tracking-tighter">Featured <span class="text-blue-600">精选资讯</span></h2>
+                <div class="swiper mySwiper"><div class="swiper-wrapper">{feat}</div><div class="swiper-pagination"></div></div>
             </section>
             
             <section>
-                <h3 class="text-3xl font-black italic uppercase mb-8 tracking-tighter text-blue-600">Official <span class="text-slate-900 dark:text-white">官方公告</span></h3>
-                <div class="swiper mySwiper"><div class="swiper-wrapper">{offi_slides}</div><div class="swiper-pagination"></div></div>
+                <h2 class="text-4xl font-black italic uppercase mb-12 tracking-tighter text-blue-600">Official <span class="dark:text-white">官方公告</span></h2>
+                <div class="swiper mySwiper"><div class="swiper-wrapper">{offi}</div><div class="swiper-pagination"></div></div>
             </section>
         </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // 初始化主题
         if (localStorage.getItem('steam_theme') === 'light') document.documentElement.classList.remove('dark');
-        
-        // 初始化所有轮播图
         document.querySelectorAll('.mySwiper').forEach(el => {{
             new Swiper(el, {{
-                effect: "coverflow",
-                centeredSlides: true,
-                slidesPerView: "auto",
-                loop: true,
-                speed: 1000,
-                autoplay: {{ delay: 5000, disableOnInteraction: false }},
-                coverflowEffect: {{ rotate: 0, stretch: 80, depth: 150, modifier: 1, slideShadows: false }},
+                effect: "coverflow", centeredSlides: true, slidesPerView: "auto", loop: true,
+                autoplay: {{ delay: 6000, disableOnInteraction: false }},
+                coverflowEffect: {{ rotate: 0, stretch: 100, depth: 150, modifier: 1.5, slideShadows: false }},
                 pagination: {{ el: el.querySelector('.swiper-pagination'), clickable: true }}
             }});
         }});
     </script>
 </body>
 </html>'''
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(template)
+    with open("index.html", "w", encoding="utf-8") as f: f.write(template)
 
 if __name__ == "__main__":
     update_web()
-    print("Web Page Updated with Latest Data.")
+    print("Optimization Complete: Festival Priority Active.")
