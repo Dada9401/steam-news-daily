@@ -5,7 +5,7 @@ import time
 import random
 
 # ==========================================
-# 1. 核心数据库：Steam 官方活动 (Roadmap 补全)
+# 核心配置：2026 Steam 官方活动数据库
 # ==========================================
 STEAM_EVENTS_2026 = [
     {"name": "棋盘游戏节", "start": "20260126", "end": "20260202", "type": "fest"},
@@ -26,7 +26,6 @@ THIRD_PARTY_EVENTS = [
 def generate_timeline_html():
     now = datetime.datetime.now()
     curr_int = int(now.strftime("%Y%m%d"))
-    # 补全逻辑：显示所有未结束的活动，按时间排序
     sorted_events = sorted(STEAM_EVENTS_2026, key=lambda x: x['start'])
     upcoming = [e for e in sorted_events if int(e['end']) >= curr_int]
     
@@ -51,19 +50,20 @@ def generate_active_ticker():
     now = datetime.datetime.now()
     curr_int = int(now.strftime("%Y%m%d"))
     contents = []
-    # 仅显示开展中的活动
+    # 综合 Steam 和 第三方活动，仅显示已开展的
     for e in STEAM_EVENTS_2026 + THIRD_PARTY_EVENTS:
         if int(e['start']) <= curr_int <= int(e['end']):
-            tag = "[Steam]" if "type" in e else "[第三方]"
-            link = e.get('url', '#')
-            contents.append(f"🔥 正在开展: {tag} {e['name']} | <a href='{link}' target='_blank' class='underline decoration-wavy'>点击进入</a>")
+            tag = "[STEAM官方]" if "type" in e else "[第三方]"
+            link = e.get('url', f"https://store.steampowered.com/search/?term={e['name']}")
+            # 增加 pointer-events-auto 确保点击有效
+            contents.append(f"🔥 正在开展: {tag} {e['name']} | <a href='{link}' target='_blank' class='underline decoration-wavy text-yellow-400 hover:text-white transition-colors relative z-[110] pointer-events-auto'>点击进入</a>")
 
     if not contents: return ""
     ticker_text = " ——— ".join(contents)
     return f'''
-    <div class="fixed bottom-0 left-0 w-full bg-blue-700 text-white py-3 z-[100] overflow-hidden whitespace-nowrap border-t border-white/20">
-        <div class="inline-block animate-marquee px-4">
-            <span class="font-black italic text-xs tracking-widest uppercase">{ticker_text} ——— {ticker_text}</span>
+    <div class="fixed bottom-0 left-0 w-full bg-blue-800 text-white py-3 z-[100] overflow-hidden whitespace-nowrap border-t border-white/20 shadow-2xl pointer-events-none">
+        <div class="inline-block animate-marquee px-4 pointer-events-none">
+            <span class="font-black italic text-xs tracking-widest uppercase pointer-events-auto">{ticker_text} ——— {ticker_text}</span>
         </div>
     </div>'''
 
@@ -73,6 +73,8 @@ def get_steam_rss_data(mode, exclude_links):
         "official": ["https://store.steampowered.com/feeds/news/collection/steam/?l=schinese"]
     }
     entries = []
+    now_date = datetime.datetime.now().strftime("%m-%d")
+
     for url in source_map.get(mode, []):
         try:
             feed = feedparser.parse(f"{url}&v={random.random()}")
@@ -82,38 +84,43 @@ def get_steam_rss_data(mode, exclude_links):
                     exclude_links.add(e.link)
         except: continue
 
-    # 权重算法：游戏节关键词直接加 1000000 分，确保排在第一帧
+    # 提权算法
     def get_score(entry):
         score = time.mktime(entry.get('published_parsed', time.gmtime(0)))
         title = entry.title.lower()
-        is_fest = any(k in title for k in ["游戏节", "festival", "fest", "新品节"])
+        pub_date = time.strftime("%m-%d", entry.published_parsed) if hasattr(entry, 'published_parsed') else ""
+        is_fest = any(k in title for k in ["游戏节", "festival", "fest", "新品节", "roguelike"])
         if is_fest:
-            score += 10**10 # 暴力提权
+            score += 10**10
+            if pub_date == now_date: score += 10**11 # 今日发布的优先级最高
         return score
 
     entries.sort(key=get_score, reverse=True)
     
     html_slides = ""
+    # 严格取前10条
     for e in entries[:10]:
         content = e.get('summary', '') or e.get('description', '')
         img = re.search(r'<img [^>]*src="([^"]+)"', content)
         img_url = img.group(1) if img else "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg"
-        is_fest = any(k in e.title.lower() for k in ["游戏节", "festival", "fest"])
+        pub_time = time.strftime("%m-%d %H:%M", e.published_parsed) if hasattr(e, 'published_parsed') else "RECENT"
+        is_fest = any(k in e.title.lower() for k in ["游戏节", "festival", "fest", "新品节", "roguelike"])
+        is_today = (time.strftime("%m-%d", e.published_parsed) == now_date) if hasattr(e, 'published_parsed') else False
         
-        # 游戏节添加高亮发光边框类名
-        highlight_class = "ring-4 ring-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.4)]" if is_fest else ""
+        # 视觉高亮边框
+        glow = "ring-4 ring-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.5)]" if is_fest else ""
         
         html_slides += f'''
         <div class="swiper-slide cursor-pointer" onclick="window.open('{e.link}', '_blank')">
-            <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all {highlight_class}">
+            <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all duration-500 {glow}">
                 <img src="{img_url}" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-95"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-3 mb-3">
-                        { "<span class='bg-emerald-500 text-white text-[9px] px-2 py-1 rounded italic font-black animate-pulse'>FESTIVAL</span>" if is_fest else "" }
-                        <span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">{time.strftime("%m-%d %H:%M", e.published_parsed)}</span>
+                        { "<span class='bg-emerald-500 text-white text-[10px] px-2 py-1 rounded italic font-black animate-pulse'>FESTIVAL</span>" if is_fest else "" }
+                        <span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">{pub_time}</span>
                     </div>
-                    <h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight uppercase">{e.title}</h2>
+                    <h2 class="text-2xl font-black text-white line-clamp-2 italic leading-tight tracking-tighter uppercase">{e.title}</h2>
                 </div>
             </div>
         </div>'''
@@ -127,7 +134,7 @@ HTML_TEMPLATE = '''
 <html lang="zh-CN" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>STEAM INTEL</title>
+    <title>STEAM INTEL CENTER</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -141,6 +148,7 @@ HTML_TEMPLATE = '''
         .swiper { width: 100%; height: 540px; padding: 20px 0 100px 0; overflow: visible !important; }
         .swiper-slide { width: 580px; opacity: 0.1; transition: 0.8s; transform: scale(0.8); filter: blur(4px); }
         .swiper-slide-active { opacity: 1; transform: scale(1); filter: blur(0); z-index: 20; }
+        a { pointer-events: auto !important; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen pb-32">
@@ -150,7 +158,7 @@ HTML_TEMPLATE = '''
                 <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none">Steam<span class="text-blue-600">Intel</span></h1>
                 <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold opacity-80">Sector Monitoring // @@NOW_TIME@@</p>
             </div>
-            <button onclick="document.documentElement.classList.toggle('dark')" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-white/10 active:scale-95 transition-all text-xs font-bold">DARK/LIGHT MODE</button>
+            <button onclick="document.documentElement.classList.toggle('dark')" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-white/10 font-bold text-xs">TOGGLE DARK MODE</button>
         </header>
 
         <section class="mb-24">
