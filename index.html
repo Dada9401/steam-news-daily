@@ -2,204 +2,258 @@
 <html lang="zh-CN" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>STEAM INTEL 2026</title>
+    <title>STEAM INTEL CENTER</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class' }
         function toggleTheme() {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
     </script>
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .swiper { width: 100%; height: 500px; padding: 20px 0 100px 0; overflow: visible !important; }
-        .swiper-slide { width: 560px; opacity: 0.1; transition: 0.7s; transform: scale(0.85); filter: blur(8px); }
+        .swiper-slide { width: 560px; opacity: 0.05; transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); transform: scale(0.8); filter: blur(12px); }
         .swiper-slide-active { opacity: 1; transform: scale(1); filter: blur(0); z-index: 50; }
-        body { transition: background 0.8s; }
+        body { transition: background-color 0.8s; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-[#020408] text-slate-900 dark:text-white p-6 md:p-16 min-h-screen">
     <div class="max-w-[1700px] mx-auto">
-        <header class="flex justify-between items-end mb-16 border-l-[12px] border-blue-600 pl-10">
+        <header class="flex justify-between items-end mb-20 border-l-[12px] border-blue-600 pl-10">
             <div>
-                <h1 class="text-8xl font-black italic tracking-tighter uppercase leading-none text-slate-900 dark:text-white">INTEL</h1>
-                <p class="text-[12px] text-blue-600 dark:text-blue-500 font-mono mt-4 tracking-[0.8em] font-black uppercase">COMMUNITY SYNC // 2026-02-02 08:19</p>
+                <h1 class="text-8xl font-black italic tracking-tighter uppercase leading-none">News Console</h1>
+                <p class="text-[12px] text-blue-600 font-mono mt-4 tracking-[0.8em] font-black uppercase italic">2026.02.02 // 2026-02-02 08:22</p>
             </div>
-            <button onclick="toggleTheme()" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-full shadow-2xl border border-slate-200 dark:border-white/10 active:scale-95 transition-all">
-                <span class="dark:hidden font-black text-xs text-slate-700">🌙 NIGHT MODE</span>
+            <button onclick="toggleTheme()" class="px-10 py-5 bg-white dark:bg-slate-800 rounded-full shadow-2xl border border-slate-200 dark:border-white/10 active:scale-95 transition-all">
+                <span class="dark:hidden font-black text-xs text-slate-700">🌙 DARK MODE</span>
                 <span class="hidden dark:inline font-black text-xs text-blue-400">☀️ LIGHT MODE</span>
             </button>
         </header>
 
-        <section class="mb-20">
-            <div class="flex items-center gap-4 mb-8"><span class="px-3 py-1 bg-blue-600 text-white text-[10px] font-black uppercase">Pipeline</span><div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div></div>
-            <div class="flex flex-nowrap gap-4 overflow-x-auto pb-6 mb-10 no-scrollbar">
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/5 shadow-xl transition-all duration-500">
-            <div class="flex justify-between items-center mb-2">
-                <span class="text-[10px] font-black text-green-500 tracking-widest uppercase">● ACTIVE</span>
-                <span class="text-[10px] font-mono text-slate-400">01/26</span>
+        <section class="mb-24">
+            <div class="flex items-center gap-4 mb-10">
+                <span class="px-4 py-1.5 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.3em]">Pipeline</span>
+                <div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div>
             </div>
-            <div class="text-sm font-bold text-slate-800 dark:text-white truncate mb-3">棋盘游戏节</div>
+            <div class="flex flex-nowrap gap-4 overflow-x-auto pb-6 mb-10 no-scrollbar select-none">
+        <div class="flex-shrink-0 w-64 p-6 rounded-[2rem] bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-white/5 transition-all">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-[10px] font-black text-green-500 tracking-widest uppercase">● ACTIVE</span>
+                <span class="text-[10px] font-mono text-slate-400 dark:text-gray-500">01/26</span>
+            </div>
+            <div class="text-sm font-black text-slate-800 dark:text-white truncate mb-4 uppercase italic tracking-tighter">棋盘游戏节</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
                 <div class="h-full bg-green-500 animate-pulse" style="width: 100%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/5 shadow-xl transition-all duration-500">
-            <div class="flex justify-between items-center mb-2">
-                <span class="text-[10px] font-black text-blue-500 tracking-widest uppercase">○ READY</span>
-                <span class="text-[10px] font-mono text-slate-400">02/05</span>
+        <div class="flex-shrink-0 w-64 p-6 rounded-[2rem] bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-white/5 transition-all">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-[10px] font-black text-purple-500 tracking-widest uppercase">○ READY</span>
+                <span class="text-[10px] font-mono text-slate-400 dark:text-gray-500">02/05</span>
             </div>
-            <div class="text-sm font-bold text-slate-800 dark:text-white truncate mb-3">打字节 (焦点节)</div>
+            <div class="text-sm font-black text-slate-800 dark:text-white truncate mb-4 uppercase italic tracking-tighter">打字节 (焦点节)</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-500 opacity-30" style="width: 20%"></div>
+                <div class="h-full bg-purple-500 opacity-30" style="width: 25%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/5 shadow-xl transition-all duration-500">
-            <div class="flex justify-between items-center mb-2">
+        <div class="flex-shrink-0 w-64 p-6 rounded-[2rem] bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-white/5 transition-all">
+            <div class="flex justify-between items-center mb-3">
                 <span class="text-[10px] font-black text-blue-500 tracking-widest uppercase">○ READY</span>
-                <span class="text-[10px] font-mono text-slate-400">02/09</span>
+                <span class="text-[10px] font-mono text-slate-400 dark:text-gray-500">02/09</span>
             </div>
-            <div class="text-sm font-bold text-slate-800 dark:text-white truncate mb-3">PvP 游戏节</div>
+            <div class="text-sm font-black text-slate-800 dark:text-white truncate mb-4 uppercase italic tracking-tighter">PvP 游戏节</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-500 opacity-30" style="width: 20%"></div>
+                <div class="h-full bg-blue-500 opacity-30" style="width: 25%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/5 shadow-xl transition-all duration-500">
-            <div class="flex justify-between items-center mb-2">
+        <div class="flex-shrink-0 w-64 p-6 rounded-[2rem] bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-white/5 transition-all">
+            <div class="flex justify-between items-center mb-3">
                 <span class="text-[10px] font-black text-yellow-500 tracking-widest uppercase">○ READY</span>
-                <span class="text-[10px] font-mono text-slate-400">02/23</span>
+                <span class="text-[10px] font-mono text-slate-400 dark:text-gray-500">02/23</span>
             </div>
-            <div class="text-sm font-bold text-slate-800 dark:text-white truncate mb-3">Steam 新品节 (2月版)</div>
+            <div class="text-sm font-black text-slate-800 dark:text-white truncate mb-4 uppercase italic tracking-tighter">Steam 新品节 (2月版)</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
-                <div class="h-full bg-yellow-500 opacity-30" style="width: 20%"></div>
+                <div class="h-full bg-yellow-500 opacity-30" style="width: 25%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/5 shadow-xl transition-all duration-500">
-            <div class="flex justify-between items-center mb-2">
-                <span class="text-[10px] font-black text-blue-500 tracking-widest uppercase">○ READY</span>
-                <span class="text-[10px] font-mono text-slate-400">03/19</span>
+        <div class="flex-shrink-0 w-64 p-6 rounded-[2rem] bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-white/5 transition-all">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-[10px] font-black text-red-500 tracking-widest uppercase">○ READY</span>
+                <span class="text-[10px] font-mono text-slate-400 dark:text-gray-500">03/19</span>
             </div>
-            <div class="text-sm font-bold text-slate-800 dark:text-white truncate mb-3">Steam 春季特卖</div>
+            <div class="text-sm font-black text-slate-800 dark:text-white truncate mb-4 uppercase italic tracking-tighter">Steam 春季特卖</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-500 opacity-30" style="width: 20%"></div>
+                <div class="h-full bg-red-500 opacity-30" style="width: 25%"></div>
+            </div>
+        </div>
+        <div class="flex-shrink-0 w-64 p-6 rounded-[2rem] bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-white/5 transition-all">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-[10px] font-black text-yellow-500 tracking-widest uppercase">○ READY</span>
+                <span class="text-[10px] font-mono text-slate-400 dark:text-gray-500">06/15</span>
+            </div>
+            <div class="text-sm font-black text-slate-800 dark:text-white truncate mb-4 uppercase italic tracking-tighter">Steam 新品节 (6月版)</div>
+            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-yellow-500 opacity-30" style="width: 25%"></div>
+            </div>
+        </div>
+        <div class="flex-shrink-0 w-64 p-6 rounded-[2rem] bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-white/5 transition-all">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-[10px] font-black text-red-500 tracking-widest uppercase">○ READY</span>
+                <span class="text-[10px] font-mono text-slate-400 dark:text-gray-500">06/25</span>
+            </div>
+            <div class="text-sm font-black text-slate-800 dark:text-white truncate mb-4 uppercase italic tracking-tighter">Steam 夏季特卖</div>
+            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-red-500 opacity-30" style="width: 25%"></div>
             </div>
         </div></div>
         </section>
 
         <main class="space-y-40">
             <section>
-                <h2 class="text-4xl font-black italic uppercase mb-10 tracking-tighter">Featured <span class="text-blue-600 italic">精选资讯 (游戏节置顶)</span></h2>
+                <h2 class="text-4xl font-black italic uppercase mb-12 tracking-tighter">Featured <span class="text-blue-600 italic">精选资讯 (游戏节置顶)</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/38204750/view/490463750770394689', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://www.destructoid.com/wp-content/uploads/2026/02/ss_728efec1335bb1c79097104d049fa1c9eac5aa89.1920x1080.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://www.destructoid.com/wp-content/uploads/2026/02/ss_728efec1335bb1c79097104d049fa1c9eac5aa89.1920x1080.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">02-02 07:53 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">How to rank up in Half Sword</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-02 07:53 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">How to rank up in Half Sword</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/38666666/view/490463750770394672', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2026/01/steam-free-horror-game-terminal-lucidity.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2026/01/steam-free-horror-game-terminal-lucidity.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">02-02 03:01 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">This Free Steam Horror Is Better Than It Has Any Right To Be</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-02 03:01 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">This Free Steam Horror Is Better Than It Has Any Right To Be</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/38666666/view/490463750770394674', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2026/01/ps-plus-ultros-february-2026-free-game.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2026/01/ps-plus-ultros-february-2026-free-game.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">02-02 03:01 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">New February PlayStation Plus Freebie Is A Must-Play Game</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-02 03:01 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">New February PlayStation Plus Freebie Is A Must-Play Game</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/9869/view/511855849001452868', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://assets-prd.ignimgs.com/2026/02/02/feb-2-1769992667882.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://assets-prd.ignimgs.com/2026/02/02/feb-2-1769992667882.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">02-02 01:34 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">AU Deals: Today's Cheapest Games, Curated For Bargain Hunters With High Standards</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-02 01:34 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">AU Deals: Today's Cheapest Games, Curated For Bargain Hunters With High Standards</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/1850/view/503974549653554449', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://cdn.mos.cms.futurecdn.net/wW8U58BtorykXvm8gdC99m-1280-80.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://cdn.mos.cms.futurecdn.net/wW8U58BtorykXvm8gdC99m-1280-80.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">02-02 01:12 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">id Software's second FPS only brought in $5,000, and the studio might not have made Wolfenstein and Doom if the game hadn't made a dev fall out of his chair: 'That was just one of the craziest things in a videogame I'd ever seen'</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-02 01:12 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">id Software's second FPS only brought in $5,000, and the studio might not have made Wolfenstein and Doom if the game hadn't made a dev fall out of his chair: 'That was just one of the craziest things in a videogame I'd ever seen'</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/718735/view/533247947228316881', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://www.wargamer.com/wp-content/sites/wargamer/2026/02/warhammer-40k-classic-space-marine-captain-preorder-900x506.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://www.wargamer.com/wp-content/sites/wargamer/2026/02/warhammer-40k-classic-space-marine-captain-preorder-900x506.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">02-02 00:23 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">Classic Warhammer 40k Space Marines return for next week's nostalgic preorders</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-02 00:23 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">Classic Warhammer 40k Space Marines return for next week's nostalgic preorders</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/38666666/view/490463750770394663', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2026/01/asthenia-concept-art-banner.png" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2026/01/asthenia-concept-art-banner.png" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">02-02 00:11 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">Elden Ring Meets Resident Evil In This Exciting New Game On Steam</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-02 00:11 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">Elden Ring Meets Resident Evil In This Exciting New Game On Steam</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/1850/view/503974549653554439', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://cdn.mos.cms.futurecdn.net/TEaWAL4ZUWSkNsPRZN7dCd-1280-80.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://cdn.mos.cms.futurecdn.net/TEaWAL4ZUWSkNsPRZN7dCd-1280-80.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">02-01 23:42 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">'What the f**k': Iron Lung creator puzzled as Markiplier's film adaptation quadruples its budget in one day, beating out Melania and Send Help at the box office</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-01 23:42 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">'What the f**k': Iron Lung creator puzzled as Markiplier's film adaptation quadruples its budget in one day, beating out Melania and Send Help at the box office</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/718735/view/533247947228316879', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://www.wargamer.com/wp-content/sites/wargamer/2026/02/Entropy-Thumbnail-900x506.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://www.wargamer.com/wp-content/sites/wargamer/2026/02/Entropy-Thumbnail-900x506.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">02-01 23:33 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">This board game about shaping solar systems has some truly cosmic ambitions</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-01 23:33 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">This board game about shaping solar systems has some truly cosmic ambitions</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/39210/view/529870247508836873', '_blank')">
-            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 transition-all duration-500 group">
-                <img src="https://clan.fastly.steamstatic.com/images/4459756/8d972d33766c14735c6a4eadc6b01cf139bfe3d9.png" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 group-hover:scale-105 transition-transform duration-1000">
+            <div class="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-transparent dark:border-white/5 group transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/4459756/8d972d33766c14735c6a4eadc6b01cf139bfe3d9.png" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-white/95 dark:from-[#020408] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
-                    <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 mb-2 font-bold">01-29 15:00 SYNC</div>
-                    <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic uppercase">Valentione's Day Comes to Eorzea on February 2!</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-29 15:00 SYNC</span>
+                        
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-[1.1] tracking-tighter italic uppercase">Valentione's Day Comes to Eorzea on February 2!</h2>
                 </div>
             </div>
         </div></div><div class="swiper-pagination"></div></div>
             </section>
             
             <section>
-                <h2 class="text-4xl font-black italic uppercase mb-10 tracking-tighter text-blue-600">Official <span class="dark:text-white">官方社区实时动态</span></h2>
+                <h2 class="text-4xl font-black italic uppercase mb-12 tracking-tighter text-blue-600">Official <span class="dark:text-white italic">官方实时公告</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper"></div><div class="swiper-pagination"></div></div>
             </section>
         </main>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
@@ -207,7 +261,7 @@
             new Swiper(el, {
                 effect: "coverflow", centeredSlides: true, slidesPerView: "auto", loop: true,
                 autoplay: { delay: 5000 },
-                coverflowEffect: { rotate: 0, stretch: 100, depth: 300, modifier: 1, slideShadows: false },
+                coverflowEffect: { rotate: 0, stretch: 80, depth: 300, modifier: 1, slideShadows: false },
                 pagination: { el: el.querySelector('.swiper-pagination'), clickable: true }
             });
         });
