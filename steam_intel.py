@@ -5,7 +5,7 @@ import time
 import random
 
 # ==========================================
-# 1. 核心数据库：Steam 官方活动
+# 1. 活动数据库
 # ==========================================
 STEAM_EVENTS_2026 = [
     {"name": "棋盘游戏节", "start": "20260126", "end": "20260202", "type": "fest", "url": "https://store.steampowered.com/category/tabletop"},
@@ -13,7 +13,6 @@ STEAM_EVENTS_2026 = [
     {"name": "打字节 (焦点节)", "start": "20260205", "end": "20260209", "type": "spotlight", "url": "https://store.steampowered.com/category/typing"},
     {"name": "PvP 游戏节", "start": "20260209", "end": "20260216", "type": "fest", "url": "https://store.steampowered.com/category/pvp"},
     {"name": "Steam 新品节 (2月版)", "start": "20260223", "end": "20260302", "type": "nextfest", "url": "https://store.steampowered.com/sale/nextfest"},
-    {"name": "Steam 春季特卖", "start": "20260319", "end": "20260326", "type": "major", "url": "https://store.steampowered.com/sale/springsale"},
 ]
 
 THIRD_PARTY_EVENTS = [
@@ -32,7 +31,7 @@ def generate_timeline_html():
         html += f'''
         <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 shadow-sm">
             <div class="flex justify-between items-center mb-4">
-                <span class="text-[10px] font-black {'text-emerald-500 animate-pulse' if active else 'text-slate-400'}">{'● ACTIVE' if active else '○ PENDING'}</span>
+                <span class="text-[10px] font-black {'text-emerald-500 animate-pulse' if active else 'text-slate-400'} uppercase">{'● ACTIVE' if active else '○ PENDING'}</span>
                 <span class="text-[10px] font-mono text-slate-400">{e['start'][4:6]}/{e['start'][6:]}</span>
             </div>
             <div class="text-base font-bold truncate mb-4">{e['name']}</div>
@@ -57,14 +56,13 @@ def generate_active_ticker():
     </div>'''
 
 def get_news_data(exclude_links, mode):
-    # 扩大抓取范围以确保去重后仍有10条
     url = "https://store.steampowered.com/feeds/news/collection/steam/?l=schinese" if mode == "official" else "https://store.steampowered.com/feeds/news/collection/featured/?l=schinese"
     try:
         feed = feedparser.parse(f"{url}&v={random.random()}")
         entries = feed.entries
     except: return ""
 
-    # 逻辑：精选提权，官方纯时间
+    # 排序：精选提权游戏节，官方纯看时间
     def sort_logic(e):
         t = time.mktime(e.get('published_parsed', time.gmtime(0)))
         if mode == "featured":
@@ -74,13 +72,12 @@ def get_news_data(exclude_links, mode):
 
     entries.sort(key=sort_logic, reverse=True)
     
-    # 筛选不重复的条目
     final_list = []
     for e in entries:
         if e.link not in exclude_links:
             final_list.append(e)
             exclude_links.add(e.link)
-        if len(final_list) == 10: break # 强行保底10条
+        if len(final_list) == 10: break # 强行保证10条
 
     html_slides = ""
     for e in final_list:
@@ -97,8 +94,8 @@ def get_news_data(exclude_links, mode):
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
-                        { "<span class='bg-emerald-500 text-white text-[9px] px-2 py-1 rounded italic font-black'>FESTIVAL</span>" if is_fest else "" }
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">{time.strftime("%m-%d %H:%M", e.published_parsed)}</span>
+                        { "<span class='bg-emerald-500 text-white text-[9px] px-2 py-1 rounded italic font-black animate-pulse'>FESTIVAL</span>" if is_fest else "" }
+                        <span class="font-mono text-[10px] text-blue-400 font-bold tracking-widest uppercase">{time.strftime("%m-%d %H:%M", e.published_parsed)}</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase">{e.title}</h2>
                 </div>
@@ -106,19 +103,81 @@ def get_news_data(exclude_links, mode):
         </div>'''
     return html_slides
 
+# ==========================================
+# 网页模板 (直接写在 Python 里，方便一键部署)
+# ==========================================
+RAW_HTML = '''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>STEAM INTEL CENTER</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('steam_theme') || 'dark';
+            if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+        })();
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { animation: { 'marquee': 'marquee 40s linear infinite' }, keyframes: { marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } } } } }
+        }
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('steam_theme', isDark ? 'dark' : 'light');
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .swiper { width: 100%; height: 540px; padding: 20px 0 100px 0; overflow: visible !important; }
+        .swiper-slide { width: 580px; opacity: 0.15; transition: 0.8s; transform: scale(0.8); filter: blur(4px); }
+        .swiper-slide-active { opacity: 1; transform: scale(1); filter: blur(0); z-index: 20; }
+        #ticker-bar a { pointer-events: auto !important; position: relative; z-index: 10001; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen pb-40 transition-colors">
+    <div class="max-w-[1500px] mx-auto">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
+            <div>
+                <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none">Steam<span class="text-blue-600">Intel</span></h1>
+                <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold opacity-80">Sector Monitoring // @@TIME@@</p>
+            </div>
+            <button onclick="toggleTheme()" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 font-bold text-xs hover:scale-105 transition-all">MODE SWITCH</button>
+        </header>
+        <section class="mb-24">
+            <div class="flex items-center gap-4 mb-10"><span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase italic">Official Roadmap</span><div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div></div>
+            @@TIMELINE@@
+        </section>
+        <main class="space-y-40">
+            <section><h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter italic">Featured <span class="text-blue-600">精选资讯</span></h2><div class="swiper mySwiper"><div class="swiper-wrapper">@@FEAT@@</div><div class="swiper-pagination"></div></div></section>
+            <section class="py-20 px-8 md:px-12 rounded-[4rem] border border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-white/5"><h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter text-blue-600 italic">Official <span class="dark:text-white">官方公告</span></h2><div class="swiper mySwiper"><div class="swiper-wrapper">@@OFFI@@</div><div class="swiper-pagination"></div></div></section>
+        </main>
+    </div>
+    @@TICKER@@
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('.mySwiper').forEach(el => {
+            new Swiper(el, {
+                effect: "coverflow", centeredSlides: true, slidesPerView: "auto", loop: true,
+                autoplay: { delay: 6000, disableOnInteraction: false },
+                coverflowEffect: { rotate: 0, stretch: 80, depth: 150, modifier: 1.2, slideShadows: false },
+                pagination: { el: el.querySelector('.swiper-pagination'), clickable: true }
+            });
+        });
+    </script>
+</body>
+</html>'''
+
 def update_web():
     now_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     exclude = set()
-    # 先拿精选，再拿官方，确保官方拿满10条
-    feat = get_news_data(exclude, "featured")
-    offi = get_news_data(exclude, "official")
-    timeline = generate_timeline_html()
-    ticker = generate_active_ticker()
+    # 按照先后顺序抓取，确保官方公告补全
+    feat_content = get_news_data(exclude, "featured")
+    offi_content = get_news_data(exclude, "official")
+    timeline_content = generate_timeline_html()
+    ticker_content = generate_active_ticker()
 
-    with open("template.html", "r", encoding="utf-8") as f:
-        tmpl = f.read()
-
-    output = tmpl.replace("@@NOW_TIME@@", now_time).replace("@@TIMELINE@@", timeline).replace("@@FEAT_HTML@@", feat).replace("@@OFFI_HTML@@", offi).replace("@@TICKER@@", ticker)
+    output = RAW_HTML.replace("@@TIME@@", now_time).replace("@@TIMELINE@@", timeline_content).replace("@@FEAT@@", feat_content).replace("@@OFFI@@", offi_content).replace("@@TICKER@@", ticker_content)
 
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(output)
