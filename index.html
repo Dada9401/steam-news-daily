@@ -2,385 +2,381 @@
 <html lang="zh-CN" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>STEAM INTEL NODE // 2026</title>
+    <title>STEAM INTEL CENTER</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class' }
         function toggleTheme() {
-            const html = document.documentElement;
-            const isDark = html.classList.toggle('dark');
+            const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('steam_theme', isDark ? 'dark' : 'light');
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
-        body { font-family: 'Space Grotesk', sans-serif; transition: background-color 0.5s ease; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .swiper { width: 100%; padding: 20px 0 80px 0; overflow: visible !important; }
-        .swiper-slide { width: 500px; opacity: 0.15; filter: blur(10px) scale(0.85); transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
-        .swiper-slide-active { opacity: 1; filter: blur(0) scale(1); z-index: 20; }
-        .swiper-pagination-bullet { background: #3b82f6 !important; }
+        .swiper { width: 100%; height: 520px; padding: 20px 0 100px 0; overflow: visible !important; }
+        .swiper-slide { width: 550px; opacity: 0.1; transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); transform: scale(0.8); filter: blur(10px); }
+        .swiper-slide-active { opacity: 1; transform: scale(1); filter: blur(0); z-index: 20; }
+        body { transition: background-color 0.6s ease; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen p-6 md:p-16">
-    <div class="max-w-[1400px] mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16">
-            <div class="border-l-4 border-blue-600 pl-6">
-                <h1 class="text-5xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">Steam<span class="text-blue-600">Intel</span></h1>
-                <p class="text-[10px] font-mono text-blue-500 mt-2 tracking-[0.4em] uppercase font-bold">Node Connected // 2026-02-02 08:32</p>
+<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen">
+    <div class="max-w-[1500px] mx-auto">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
+            <div class="text-center md:text-left">
+                <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none text-slate-900 dark:text-white">Steam<span class="text-blue-600">Intel</span></h1>
+                <p class="text-[11px] text-blue-600 dark:text-blue-500 font-mono mt-4 tracking-[0.5em] uppercase font-bold opacity-80">Terminal Hub // 2026-02-02 08:38</p>
             </div>
-            <button onclick="toggleTheme()" class="mt-6 md:mt-0 group flex items-center gap-3 px-6 py-3 bg-white dark:bg-slate-900 rounded-full shadow-lg border border-slate-200 dark:border-white/5 transition-all hover:scale-105 active:scale-95">
-                <div class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></div>
-                <span class="text-xs font-black tracking-widest uppercase dark:hidden">Switch to Dark</span>
-                <span class="text-xs font-black tracking-widest uppercase hidden dark:inline text-blue-400">Switch to Light</span>
+            <button onclick="toggleTheme()" class="group px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 transition-all hover:scale-105 active:scale-95">
+                <span class="dark:hidden font-black text-xs tracking-widest text-slate-600">DARK MODE</span>
+                <span class="hidden dark:inline font-black text-xs tracking-widest text-blue-400">LIGHT MODE</span>
             </button>
         </header>
 
-        <section class="mb-20">
-            <div class="flex items-center gap-4 mb-8">
-                <h2 class="text-xs font-black text-blue-600 uppercase tracking-widest">2026 Roadmap</h2>
+        <section class="mb-24">
+            <div class="flex items-center gap-4 mb-10">
+                <span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase">Operational Roadmap</span>
                 <div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div>
             </div>
             <div class="flex flex-nowrap gap-4 overflow-x-auto pb-6 mb-10 no-scrollbar select-none">
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-white/10 transition-all duration-500 shadow-sm">
+        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-emerald-500 animate-pulse uppercase">● LIVE NOW</span>
+                <span class="text-[9px] font-black tracking-tighter text-emerald-500 animate-pulse uppercase">● ACTIVE</span>
                 <span class="text-[10px] font-mono text-slate-400">01-26</span>
             </div>
             <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">棋盘游戏节</div>
-            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-blue-500 shadow-[0_0_8px] shadow-blue-500" style="width: 100%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-white/10 transition-all duration-500 shadow-sm">
+        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ SCHEDULED</span>
+                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ PENDING</span>
                 <span class="text-[10px] font-mono text-slate-400">02-05</span>
             </div>
             <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">打字节 (焦点节)</div>
-            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-purple-500 opacity-20" style="width: 20%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-white/10 transition-all duration-500 shadow-sm">
+        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ SCHEDULED</span>
+                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ PENDING</span>
                 <span class="text-[10px] font-mono text-slate-400">02-09</span>
             </div>
             <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">PvP 游戏节</div>
-            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-blue-500 opacity-20" style="width: 20%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-white/10 transition-all duration-500 shadow-sm">
+        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ SCHEDULED</span>
+                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ PENDING</span>
                 <span class="text-[10px] font-mono text-slate-400">02-23</span>
             </div>
             <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">Steam 新品节 (2月版)</div>
-            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-emerald-500 opacity-20" style="width: 20%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-white/10 transition-all duration-500 shadow-sm">
+        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ SCHEDULED</span>
+                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ PENDING</span>
                 <span class="text-[10px] font-mono text-slate-400">03-19</span>
             </div>
             <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">Steam 春季特卖</div>
-            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-red-500 opacity-20" style="width: 20%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-white/10 transition-all duration-500 shadow-sm">
+        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ SCHEDULED</span>
+                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ PENDING</span>
                 <span class="text-[10px] font-mono text-slate-400">06-15</span>
             </div>
             <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">Steam 新品节 (6月版)</div>
-            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-emerald-500 opacity-20" style="width: 20%"></div>
             </div>
         </div>
-        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-white/10 transition-all duration-500 shadow-sm">
+        <div class="flex-shrink-0 w-60 p-5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-white/5 transition-all shadow-sm">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ SCHEDULED</span>
+                <span class="text-[9px] font-black tracking-tighter text-slate-400 uppercase">○ PENDING</span>
                 <span class="text-[10px] font-mono text-slate-400">06-25</span>
             </div>
             <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate mb-3">Steam 夏季特卖</div>
-            <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+            <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-red-500 opacity-20" style="width: 20%"></div>
             </div>
         </div></div>
         </section>
 
-        <main class="space-y-24">
+        <main class="space-y-32">
             <section>
-                <h3 class="text-3xl font-black italic uppercase mb-8 tracking-tighter">Featured <span class="text-blue-600">精选资讯</span></h3>
+                <h2 class="text-4xl font-black italic uppercase mb-12 tracking-tighter">Featured <span class="text-blue-600">精选资讯</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1588550/view/493841450487776602', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/45050904/bba2a5e661ad67ef3fe056c598d414f1e2cbd453.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/44794657/view/500594947381003217', '_blank')">
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.2)] transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/44794657/45fb314ba0055b9d33df01a55d468ef4699f9acc.png" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">02/01 20:45</span>
+                        <span class="bg-emerald-500 text-white text-[9px] px-2 py-0.5 rounded mr-2 animate-pulse">FESTIVAL</span>
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-29 07:44 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Thank you for 200,000 climbers!</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">再来一局 游戏节 2026</h2>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1588550/view/493841450487776602', '_blank')">
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/45050904/bba2a5e661ad67ef3fe056c598d414f1e2cbd453.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 p-8 w-full">
+                    <div class="flex items-center gap-2 mb-3">
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-01 20:45 SYNC</span>
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Thank you for 200,000 climbers!</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/3472040/view/520863048256193637', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/45693118/96aefc31abe586669d41703b5087aed4a0ef6cd1.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/45693118/96aefc31abe586669d41703b5087aed4a0ef6cd1.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">02/01 20:23</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">02-01 20:23 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Greatness Challenges Live</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Greatness Challenges Live</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/2956680/view/494967350396715827', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/45635907/ef9df1c35526833cd2f0a090125da7e2f99f4223.png" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/45635907/ef9df1c35526833cd2f0a090125da7e2f99f4223.png" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/31 20:57</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-31 20:57 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">销量突破 25 万！</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">销量突破 25 万！</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/2397300/view/533247947228316809', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/31 17:56</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-31 17:56 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Hotfix 2: Character Creation & starting Slums optimization</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Hotfix 2: Character Creation & starting Slums optimization</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1222670/view/500596849929880692', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/38096876/b8970422b2767a50b895a18c751538f9959591e4.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/38096876/b8970422b2767a50b895a18c751538f9959591e4.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/31 17:00</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-31 17:00 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">The Sims™ 4 Lunar New Year Sale</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">The Sims™ 4 Lunar New Year Sale</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/270880/view/508478149279875825', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/4036972/4fac3f930f2718abaf746ff29aea0c90c1059c39.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/4036972/4fac3f930f2718abaf746ff29aea0c90c1059c39.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/31 16:00</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-31 16:00 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Road Trip: Meet the Team</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Road Trip: Meet the Team</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/32941522/view/517484714079027366', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/32941522/fd611158edb4564af9eeeb74e0a37cc03aa19a63.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/32941522/fd611158edb4564af9eeeb74e0a37cc03aa19a63.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/31 01:30</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-31 01:30 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Welcome to the Bridge Constructor Franchise Sale 2026!</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Welcome to the Bridge Constructor Franchise Sale 2026!</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/236390/view/530996147414630456', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/4649813/38826519ec36b98dc48d48b2fb70507774620c7b.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/4649813/38826519ec36b98dc48d48b2fb70507774620c7b.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/30 15:43</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-30 15:43 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">史海拾遗·二月：血战硫磺岛</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">史海拾遗·二月：血战硫磺岛</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/39210/view/529870247508836873', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/4459756/8d972d33766c14735c6a4eadc6b01cf139bfe3d9.png" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://clan.akamai.steamstatic.com/images/4459756/8d972d33766c14735c6a4eadc6b01cf139bfe3d9.png" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/29 15:00</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-29 15:00 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Valentione's Day Comes to Eorzea on February 2!</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/44794657/view/500594947381003217', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/44794657/45fb314ba0055b9d33df01a55d468ef4699f9acc.png" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/29 07:44</span>
-                    </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">再来一局 游戏节 2026</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Valentione's Day Comes to Eorzea on February 2!</h2>
                 </div>
             </div>
         </div></div><div class="swiper-pagination"></div></div>
             </section>
             
             <section>
-                <h3 class="text-3xl font-black italic uppercase mb-8 tracking-tighter text-blue-600">Official <span class="text-slate-900 dark:text-white">官方公告</span></h3>
+                <h2 class="text-4xl font-black italic uppercase mb-12 tracking-tighter text-blue-600">Official <span class="dark:text-white">官方公告</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/499470950023037988', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/31 01:47</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-31 01:47 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Steam Deck Beta Client Update: January 30th</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Steam Deck Beta Client Update: January 30th</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4397053/view/540003346670421020', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/31 01:47</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-31 01:47 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Steam Client Beta - January 30th</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Steam Client Beta - January 30th</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/511855214544815767', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/27 01:25</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-27 01:25 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Steam Deck 测试版客户端更新 - 1 月 26 日</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Steam Deck 测试版客户端更新 - 1 月 26 日</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4397053/view/503973915196917559', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/27 01:24</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-27 01:24 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Steam Client Beta - January 26th</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Steam Client Beta - January 26th</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/593110/view/541128612120628472', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://steamcommunity.com/public/shared/images/responsive/youtube_16x9_placeholder.gif" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.2)] transition-all duration-500">
+                <img src="https://steamcommunity.com/public/shared/images/responsive/youtube_16x9_placeholder.gif" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/26 21:06</span>
+                        <span class="bg-emerald-500 text-white text-[9px] px-2 py-0.5 rounded mr-2 animate-pulse">FESTIVAL</span>
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">01-26 21:06 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">Steam 棋盘游戏节开始了！</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4145017/view/514106380538349110', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/21 23:30</span>
-                    </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">辅助功能类别更新</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4145017/view/493839547938902178', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/4145017/3bb5aff5896a81cbb64f443e1283188379263c28.png" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/16 22:24</span>
-                    </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">全新：Web API 密钥现拥有更完善的权限与控制</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4145017/view/493837645658461607', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/15 18:19</span>
-                    </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">新鲜出炉：2026 年下半年 Steam 活动日程</h2>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/4145017/view/497183817277113900', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://clan.akamai.steamstatic.com/images/4145017/bc536b5f0e1e488237c412adef52f3c398b14900.png" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
-                <div class="absolute bottom-0 p-8 w-full">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">01/08 16:51</span>
-                    </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">全新！ Steam 创意工坊模组版本控制</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">Steam 棋盘游戏节开始了！</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/589535332141108060', '_blank')">
-            <div class="relative h-[420px] w-full overflow-hidden rounded-[2rem] bg-slate-200 dark:bg-slate-800 border border-slate-300/50 dark:border-white/5 transition-all duration-500 group-hover:border-blue-500/50">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 dark:opacity-50 transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-100 dark:from-slate-950 via-transparent to-transparent"></div>
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full">
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-bold tracking-widest uppercase">Steam Feed</span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-blue-400 font-bold">12/18 17:45</span>
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">12-18 17:45 SYNC</span>
                     </div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter">冬季特卖精选深度折扣</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">冬季特卖精选深度折扣</h2>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/516348030198219501', '_blank')">
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 p-8 w-full">
+                    <div class="flex items-center gap-2 mb-3">
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">10-20 18:32 SYNC</span>
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">“Steam 新品节：2025 年 10 月版”的最热玩试用版</h2>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/516349298458230876', '_blank')">
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 p-8 w-full">
+                    <div class="flex items-center gap-2 mb-3">
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">10-13 16:48 SYNC</span>
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">2025 年 10 月版新品节 - 火热进行中！</h2>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/516348030198219157', '_blank')">
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 p-8 w-full">
+                    <div class="flex items-center gap-2 mb-3">
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">10-02 17:14 SYNC</span>
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">新品节 2025 年 10 月版 - 开发者预览</h2>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide group cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/39049601/view/644691200809370217', '_blank')">
+            <div class="relative h-[420px] w-full overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a1f26] border border-slate-200 dark:border-white/5 transition-all duration-500">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-40 transition-transform duration-1000 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0b0e14] via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 p-8 w-full">
+                    <div class="flex items-center gap-2 mb-3">
+                        
+                        <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">08-12 19:54 SYNC</span>
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-2 leading-tight tracking-tighter italic">“Steam 新品节： 2025 年 10 月版”- 即将隆重登场</h2>
                 </div>
             </div>
         </div></div><div class="swiper-pagination"></div></div>
@@ -390,19 +386,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // 初始化主题
         if (localStorage.getItem('steam_theme') === 'light') document.documentElement.classList.remove('dark');
-        
-        // 初始化所有轮播图
         document.querySelectorAll('.mySwiper').forEach(el => {
             new Swiper(el, {
-                effect: "coverflow",
-                centeredSlides: true,
-                slidesPerView: "auto",
-                loop: true,
-                speed: 1000,
-                autoplay: { delay: 5000, disableOnInteraction: false },
-                coverflowEffect: { rotate: 0, stretch: 80, depth: 150, modifier: 1, slideShadows: false },
+                effect: "coverflow", centeredSlides: true, slidesPerView: "auto", loop: true,
+                autoplay: { delay: 6000, disableOnInteraction: false },
+                coverflowEffect: { rotate: 0, stretch: 100, depth: 150, modifier: 1.5, slideShadows: false },
                 pagination: { el: el.querySelector('.swiper-pagination'), clickable: true }
             });
         });
