@@ -2,8 +2,8 @@ name: Update Steam Intel Page
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # 每6小时自动运行一次
-  workflow_dispatch:      # 支持手动触发
+    - cron: '0 */6 * * *' # 每6小时运行
+  workflow_dispatch:      # 允许手动点按钮运行
 
 jobs:
   build:
@@ -18,16 +18,15 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: |
-          pip install feedparser
+        run: pip install feedparser
 
       - name: Run Update Script
-        run: python steam_intel.py # 请确保你的文件名与此一致
+        run: python steam_intel.py 
 
       - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Update News: $(date)" || echo "No changes to commit"
+          git commit -m "Auto Update News" || echo "No changes"
           git push
