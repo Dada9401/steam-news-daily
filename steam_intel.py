@@ -51,41 +51,59 @@ def generate_active_ticker():
     </div>'''
 
 def get_news_html(mode, exclude_links):
-    url = "https://store.steampowered.com/feeds/news/collection/featured/?l=schinese" if mode == "featured" else "https://store.steampowered.com/feeds/news/collection/steam/?l=schinese"
-    try:
-        # 抓取更多数据以确保筛选基数
-        feed = feedparser.parse(f"{url}&v={random.random()}")
-        all_entries = feed.entries
-    except: return ""
+    # ====================================================
+    # 核心修正 1：官方公告多源聚合（凑齐8条的关键）
+    # ====================================================
+    if mode == "official":
+        urls = [
+            "https://store.steampowered.com/feeds/news/collection/steam/?l=schinese",       # Steam 官方博客
+            "https://store.steampowered.com/feeds/news/group/39049601/?l=schinese",         # Steam 官方组
+            "https://store.steampowered.com/feeds/news/collection/client/?l=schinese"       # Steam 客户端更新
+        ]
+    else:
+        urls = ["https://store.steampowered.com/feeds/news/collection/featured/?l=schinese"] # 精选
+
+    all_entries = []
+    for url in urls:
+        try:
+            feed = feedparser.parse(f"{url}&v={random.random()}")
+            all_entries.extend(feed.entries)
+        except: continue
+
+    # 去重（因为不同源可能会有重复新闻）
+    unique_entries = []
+    seen_ids = set()
+    for e in all_entries:
+        if e.link not in seen_ids:
+            unique_entries.append(e)
+            seen_ids.add(e.link)
 
     final_list = []
 
-    # ----------------------------------------------------
-    # 逻辑核心修正区
-    # ----------------------------------------------------
+    # ====================================================
+    # 核心修正 2：Sale 权重剔除 & 分桶排序
+    # ====================================================
     if mode == "featured":
-        # 策略：分桶法 (Bucketing)
-        # 1. 先把所有带“游戏节”的新闻挑出来
+        # 1. 严格定义“高权重”：只包含游戏节，剔除 SALE
         fest_news = []
         normal_news = []
         
-        for e in all_entries:
+        for e in unique_entries:
             title = e.title.lower()
-            is_fest = any(k in title for k in ["游戏节", "festival", "fest", "roguelike", "sale", "新品节"])
+            # 注意：这里删除了 "sale" 和 "特卖"
+            is_fest = any(k in title for k in ["游戏节", "festival", "fest", "新品节", "roguelike"]) 
             if is_fest:
                 fest_news.append(e)
             else:
                 normal_news.append(e)
         
-        # 2. 桶内分别按时间排序
+        # 2. 桶内按时间倒序
         fest_news.sort(key=lambda x: time.mktime(x.get('published_parsed', time.gmtime(0))), reverse=True)
         normal_news.sort(key=lambda x: time.mktime(x.get('published_parsed', time.gmtime(0))), reverse=True)
         
-        # 3. 物理拼接：游戏节必须在普通新闻前面
-        # 这样 index 0 绝对是游戏节（如果存在的话）
+        # 3. 游戏节桶放在最前面
         combined = fest_news + normal_news
         
-        # 4. 截取前 10 并去重
         count = 0
         for e in combined:
             if e.link not in exclude_links:
@@ -94,44 +112,36 @@ def get_news_html(mode, exclude_links):
                 count += 1
             if count >= 10: break
 
-    else: # mode == "official"
-        # 策略：保底填充法
-        # 1. 先按时间排序
-        all_entries.sort(key=lambda x: time.mktime(x.get('published_parsed', time.gmtime(0))), reverse=True)
+    else: # Official Mode
+        # 1. 纯时间排序
+        unique_entries.sort(key=lambda x: time.mktime(x.get('published_parsed', time.gmtime(0))), reverse=True)
         
-        # 2. 第一轮：尝试去重添加
-        for e in all_entries:
+        # 2. 填充 8 条
+        count = 0
+        for e in unique_entries:
+            # 官方公告允许重复（如果精选里有了，官方这里为了凑数可以再显示一次，或者你可以选择严格去重）
+            # 为了保证你说的“8条”，我们这里采用宽松去重：尽量不重，不够再补
             if e.link not in exclude_links:
                 final_list.append(e)
-                # 注意：官方公告这里我们不更新 exclude_links 了，避免自己卡自己
-            if len(final_list) >= 8: break
-            
-        # 3. 第二轮：如果不够 8 条，开启“无视去重”模式强制回填
+                count += 1
+            if count >= 8: break
+        
+        # 3. 暴力补齐：如果去重后不够8条，从剩余池子里硬抓
         if len(final_list) < 8:
-            for e in all_entries:
-                # 只要不在 final_list 里就加进去，不管 exclude_links
-                is_in_list = any(existing.link == e.link for existing in final_list)
-                if not is_in_list:
+            for e in unique_entries:
+                if e not in final_list:
                     final_list.append(e)
                 if len(final_list) >= 8: break
-                
-        # 4. 强制截断到 8 条（不多不少）
-        final_list = final_list[:8]
 
-    # ----------------------------------------------------
-    # HTML 生成区
-    # ----------------------------------------------------
+    # HTML 生成
     html_slides = ""
-    for index, e in enumerate(final_list):
+    for e in final_list:
         content = e.get('summary', '') or e.get('description', '')
         img = re.search(r'<img [^>]*src="([^"]+)"', content)
         img_url = img.group(1) if img else "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg"
         
-        # 重新判断一下是否为游戏节，用于加边框
-        is_fest = any(k in e.title.lower() for k in ["游戏节", "festival", "fest", "roguelike", "sale"])
-        
-        # 只有精选板块的第一条如果是游戏节，才加最强高亮，或者所有游戏节都加
-        # 这里逻辑：精选板块 + 是游戏节 = 发光
+        # 高亮逻辑同步：只有真正的游戏节才发光
+        is_fest = any(k in e.title.lower() for k in ["游戏节", "festival", "fest", "新品节", "roguelike"])
         glow = "ring-4 ring-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.8)]" if (is_fest and mode == "featured") else ""
         
         pub_str = time.strftime("%m-%d", e.published_parsed) if hasattr(e, 'published_parsed') else "RECENT"
@@ -153,7 +163,7 @@ def get_news_html(mode, exclude_links):
     return html_slides
 
 # ==========================================
-# 静态 HTML 模板 (记忆颜色 + 8条标识)
+# 静态 HTML 模板
 # ==========================================
 RAW_HTML = '''<!DOCTYPE html>
 <html lang="zh-CN">
@@ -163,21 +173,17 @@ RAW_HTML = '''<!DOCTYPE html>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // 1. 强制读取主题，默认为 Light
         (function() {
             try {
                 const saved = localStorage.getItem('steam_theme');
-                // 只有明确存了 dark 才变黑，否则全是亮色
                 if (saved === 'dark') document.documentElement.classList.add('dark');
                 else document.documentElement.classList.remove('dark');
             } catch(e) {}
         })();
-
         tailwind.config = {
             darkMode: 'class',
             theme: { extend: { animation: { 'marquee': 'marquee 40s linear infinite' }, keyframes: { marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } } } } }
         }
-
         function toggleTheme() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('steam_theme', isDark ? 'dark' : 'light');
@@ -200,18 +206,15 @@ RAW_HTML = '''<!DOCTYPE html>
             </div>
             <button onclick="toggleTheme()" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 font-bold text-xs active:scale-95 transition-all">COLOR MODE</button>
         </header>
-
         <section class="mb-24">
             <div class="flex items-center gap-4 mb-10"><span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase italic">Official Roadmap</span><div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div></div>
             @@TIMELINE@@
         </section>
-
         <main class="space-y-40">
             <section>
                 <h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter italic">Featured <span class="text-blue-600">精选资讯</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">@@FEAT@@</div><div class="swiper-pagination"></div></div>
             </section>
-            
             <section class="py-20 px-8 md:px-12 rounded-[4rem] border border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-white/5 shadow-inner">
                 <h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter text-blue-600 italic">Official <span class="dark:text-white">官方公告 (8)</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">@@OFFI@@</div><div class="swiper-pagination"></div></div>
@@ -236,21 +239,14 @@ RAW_HTML = '''<!DOCTYPE html>
 def update_web():
     now_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     exclude = set()
-    
-    # 逻辑核心：
-    # 1. 精选优先抓取，并占满 exclude
     feat_content = get_news_html("featured", exclude)
-    # 2. 官方随后抓取，必须返回 8 条
     offi_content = get_news_html("official", exclude)
-    
     timeline_content = generate_timeline_html()
     ticker_content = generate_active_ticker()
-
     output = RAW_HTML.replace("@@TIME@@", now_time).replace("@@TIMELINE@@", timeline_content).replace("@@FEAT@@", feat_content).replace("@@OFFI@@", offi_content).replace("@@TICKER@@", ticker_content)
-
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(output)
 
 if __name__ == "__main__":
     update_web()
-    print("Build Success: Festival Pinned to Index 0 & Official Forced to 8 Items.")
+    print("Optimization Complete: Sales deprioritized, Official sources aggregated.")
