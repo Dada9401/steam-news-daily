@@ -6,14 +6,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // 【核心修复：主题记忆】在页面渲染前执行，绝不默认黑色
         (function() {
-            const savedTheme = localStorage.getItem('steam_theme') || 'dark';
-            if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+            const savedTheme = localStorage.getItem('steam_theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
         })();
+
         tailwind.config = {
             darkMode: 'class',
             theme: { extend: { animation: { 'marquee': 'marquee 40s linear infinite' }, keyframes: { marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } } } } }
         }
+
         function toggleTheme() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('steam_theme', isDark ? 'dark' : 'light');
@@ -27,24 +34,28 @@
         #ticker-bar a { pointer-events: auto !important; position: relative; z-index: 10001; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen pb-40 transition-colors">
+<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen pb-40 transition-colors duration-500">
     <div class="max-w-[1500px] mx-auto">
         <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
-            <div>
+            <div class="text-center md:text-left">
                 <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none">Steam<span class="text-blue-600">Intel</span></h1>
-                <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold opacity-80">Sector Monitoring // 2026-02-02 09:57</p>
+                <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold opacity-80">Sector Monitoring // 2026-02-02 10:01</p>
             </div>
-            <button onclick="toggleTheme()" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 font-bold text-xs hover:scale-105 transition-all">MODE SWITCH</button>
+            <button onclick="toggleTheme()" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 font-bold text-xs hover:scale-105 transition-all">SWITCH COLOR THEME</button>
         </header>
+
         <section class="mb-24">
-            <div class="flex items-center gap-4 mb-10"><span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase italic">Official Roadmap</span><div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div></div>
+            <div class="flex items-center gap-4 mb-10">
+                <span class="px-4 py-1 bg-blue-600 text-white text-[10px] font-black rounded-full uppercase italic">Official Roadmap</span>
+                <div class="h-px flex-1 bg-slate-200 dark:bg-white/10"></div>
+            </div>
             <div class="flex flex-nowrap gap-4 overflow-x-auto pb-6 mb-10 no-scrollbar select-none">
         <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 shadow-sm">
             <div class="flex justify-between items-center mb-4">
                 <span class="text-[10px] font-black text-emerald-500 animate-pulse uppercase">● ACTIVE</span>
                 <span class="text-[10px] font-mono text-slate-400">01/26</span>
             </div>
-            <div class="text-base font-bold truncate mb-4">棋盘游戏节</div>
+            <div class="text-base font-bold truncate mb-4 dark:text-white">棋盘游戏节</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-emerald-500" style="width: 100%"></div>
             </div>
@@ -54,7 +65,7 @@
                 <span class="text-[10px] font-black text-emerald-500 animate-pulse uppercase">● ACTIVE</span>
                 <span class="text-[10px] font-mono text-slate-400">01/30</span>
             </div>
-            <div class="text-base font-bold truncate mb-4">再来一局游戏节 (Tiny Roguelikes)</div>
+            <div class="text-base font-bold truncate mb-4 dark:text-white">再来一局游戏节 (Tiny Roguelikes)</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-emerald-500" style="width: 100%"></div>
             </div>
@@ -64,7 +75,7 @@
                 <span class="text-[10px] font-black text-slate-400 uppercase">○ PENDING</span>
                 <span class="text-[10px] font-mono text-slate-400">02/05</span>
             </div>
-            <div class="text-base font-bold truncate mb-4">打字节 (焦点节)</div>
+            <div class="text-base font-bold truncate mb-4 dark:text-white">打字节 (焦点节)</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-blue-600" style="width: 20%"></div>
             </div>
@@ -74,7 +85,7 @@
                 <span class="text-[10px] font-black text-slate-400 uppercase">○ PENDING</span>
                 <span class="text-[10px] font-mono text-slate-400">02/09</span>
             </div>
-            <div class="text-base font-bold truncate mb-4">PvP 游戏节</div>
+            <div class="text-base font-bold truncate mb-4 dark:text-white">PvP 游戏节</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-blue-600" style="width: 20%"></div>
             </div>
@@ -84,17 +95,20 @@
                 <span class="text-[10px] font-black text-slate-400 uppercase">○ PENDING</span>
                 <span class="text-[10px] font-mono text-slate-400">02/23</span>
             </div>
-            <div class="text-base font-bold truncate mb-4">Steam 新品节 (2月版)</div>
+            <div class="text-base font-bold truncate mb-4 dark:text-white">Steam 新品节 (2月版)</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-blue-600" style="width: 20%"></div>
             </div>
         </div></div>
         </section>
+
         <main class="space-y-40">
-            <section><h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter italic">Featured <span class="text-blue-600">精选资讯</span></h2><div class="swiper mySwiper"><div class="swiper-wrapper">
+            <section>
+                <h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter italic">Featured <span class="text-blue-600">精选资讯</span></h2>
+                <div class="swiper mySwiper"><div class="swiper-wrapper">
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1222670/view/500596849929880692', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
-                <img src="https://clan.akamai.steamstatic.com/images/38096876/b8970422b2767a50b895a18c751538f9959591e4.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
+                <img src="https://clan.fastly.steamstatic.com/images/38096876/b8970422b2767a50b895a18c751538f9959591e4.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
@@ -107,7 +121,7 @@
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/32941522/view/517484714079027366', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
-                <img src="https://clan.akamai.steamstatic.com/images/32941522/fd611158edb4564af9eeeb74e0a37cc03aa19a63.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
+                <img src="https://clan.fastly.steamstatic.com/images/32941522/fd611158edb4564af9eeeb74e0a37cc03aa19a63.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
@@ -120,7 +134,7 @@
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/44794657/view/500594947381003217', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ring-4 ring-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.5)]">
-                <img src="https://clan.akamai.steamstatic.com/images/44794657/45fb314ba0055b9d33df01a55d468ef4699f9acc.png" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
+                <img src="https://clan.fastly.steamstatic.com/images/44794657/45fb314ba0055b9d33df01a55d468ef4699f9acc.png" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
@@ -133,7 +147,7 @@
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1588550/view/493841450487776602', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
-                <img src="https://clan.akamai.steamstatic.com/images/45050904/bba2a5e661ad67ef3fe056c598d414f1e2cbd453.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
+                <img src="https://clan.fastly.steamstatic.com/images/45050904/bba2a5e661ad67ef3fe056c598d414f1e2cbd453.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
@@ -146,7 +160,7 @@
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/3472040/view/520863048256193637', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
-                <img src="https://clan.akamai.steamstatic.com/images/45693118/96aefc31abe586669d41703b5087aed4a0ef6cd1.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
+                <img src="https://clan.fastly.steamstatic.com/images/45693118/96aefc31abe586669d41703b5087aed4a0ef6cd1.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
@@ -159,7 +173,7 @@
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/2956680/view/494967350396715827', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
-                <img src="https://clan.akamai.steamstatic.com/images/45635907/ef9df1c35526833cd2f0a090125da7e2f99f4223.png" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
+                <img src="https://clan.fastly.steamstatic.com/images/45635907/ef9df1c35526833cd2f0a090125da7e2f99f4223.png" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
@@ -185,7 +199,7 @@
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/270880/view/508478149279875825', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
-                <img src="https://clan.akamai.steamstatic.com/images/4036972/4fac3f930f2718abaf746ff29aea0c90c1059c39.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
+                <img src="https://clan.fastly.steamstatic.com/images/4036972/4fac3f930f2718abaf746ff29aea0c90c1059c39.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
@@ -198,7 +212,7 @@
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/236390/view/530996147414630456', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
-                <img src="https://clan.akamai.steamstatic.com/images/4649813/38826519ec36b98dc48d48b2fb70507774620c7b.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
+                <img src="https://clan.fastly.steamstatic.com/images/4649813/38826519ec36b98dc48d48b2fb70507774620c7b.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
@@ -211,7 +225,7 @@
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/39210/view/529870247508836873', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
-                <img src="https://clan.akamai.steamstatic.com/images/4459756/8d972d33766c14735c6a4eadc6b01cf139bfe3d9.png" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
+                <img src="https://clan.fastly.steamstatic.com/images/4459756/8d972d33766c14735c6a4eadc6b01cf139bfe3d9.png" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
@@ -221,8 +235,12 @@
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase">Valentione's Day Comes to Eorzea on February 2!</h2>
                 </div>
             </div>
-        </div></div><div class="swiper-pagination"></div></div></section>
-            <section class="py-20 px-8 md:px-12 rounded-[4rem] border border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-white/5"><h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter text-blue-600 italic">Official <span class="dark:text-white">官方公告</span></h2><div class="swiper mySwiper"><div class="swiper-wrapper">
+        </div></div><div class="swiper-pagination"></div></div>
+            </section>
+            
+            <section class="py-20 px-8 md:px-12 rounded-[4rem] border border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-white/5 shadow-inner">
+                <h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter text-blue-600 italic">Official <span class="dark:text-white">官方公告</span></h2>
+                <div class="swiper mySwiper"><div class="swiper-wrapper">
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1675200/view/499470950023037988', '_blank')">
             <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
                 <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3985950/capsule_617x353.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
@@ -287,11 +305,15 @@
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase">Steam 棋盘游戏节开始了！</h2>
                 </div>
             </div>
-        </div></div><div class="swiper-pagination"></div></div></section>
+        </div></div><div class="swiper-pagination"></div></div>
+            </section>
         </main>
     </div>
-    <div id="ticker-bar" class="fixed bottom-0 left-0 w-full bg-blue-900 text-white py-4 z-[9999] overflow-hidden whitespace-nowrap border-t border-white/20 shadow-2xl">
-        <div class="inline-block animate-marquee px-4"><span class="font-bold italic text-sm uppercase"><span>🔥 正在开展: 棋盘游戏节</span> | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='text-yellow-400 font-bold hover:underline px-2'>[进入会场]</a> ——— <span>🔥 正在开展: 再来一局游戏节 (Tiny Roguelikes)</span> | <a href='https://store.steampowered.com/developer/rogueduck/sale/TinyRoguelikes2026' target='_blank' class='text-yellow-400 font-bold hover:underline px-2'>[进入会场]</a> ——— <span>🔥 正在开展: 棋盘游戏节</span> | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='text-yellow-400 font-bold hover:underline px-2'>[进入会场]</a> ——— <span>🔥 正在开展: 再来一局游戏节 (Tiny Roguelikes)</span> | <a href='https://store.steampowered.com/developer/rogueduck/sale/TinyRoguelikes2026' target='_blank' class='text-yellow-400 font-bold hover:underline px-2'>[进入会场]</a></span></div>
+    
+    <div id="ticker-bar" class="fixed bottom-0 left-0 w-full bg-blue-900 text-white py-4 z-[9000] overflow-hidden whitespace-nowrap border-t border-white/20 shadow-2xl">
+        <div class="inline-block animate-marquee px-4">
+            <span class="font-bold italic text-sm uppercase"><span>🔥 正在开展: 棋盘游戏节</span> | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a> ——— <span>🔥 正在开展: 再来一局游戏节 (Tiny Roguelikes)</span> | <a href='https://store.steampowered.com/developer/rogueduck/sale/TinyRoguelikes2026' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a> ——— <span>🔥 正在开展: 棋盘游戏节</span> | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a> ——— <span>🔥 正在开展: 再来一局游戏节 (Tiny Roguelikes)</span> | <a href='https://store.steampowered.com/developer/rogueduck/sale/TinyRoguelikes2026' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a></span>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
