@@ -6,11 +6,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // 【核心修复：记忆主题】必须在 DOM 渲染前执行
+        // 1. 强制读取主题，默认为 Light
         (function() {
-            const saved = localStorage.getItem('steam_theme') || 'light';
-            if (saved === 'dark') document.documentElement.classList.add('dark');
-            else document.documentElement.classList.remove('dark');
+            try {
+                const saved = localStorage.getItem('steam_theme');
+                // 只有明确存了 dark 才变黑，否则全是亮色
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+            } catch(e) {}
         })();
 
         tailwind.config = {
@@ -31,12 +34,12 @@
         #ticker-bar a { pointer-events: auto !important; position: relative; z-index: 10001; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen pb-40 transition-colors duration-500">
+<body class="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 p-6 md:p-16 min-h-screen pb-40 transition-colors duration-300">
     <div class="max-w-[1500px] mx-auto">
         <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
-            <div>
+            <div class="text-center md:text-left">
                 <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none">Steam<span class="text-blue-600">Intel</span></h1>
-                <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold">Sector Monitoring // 2026-02-02 10:05</p>
+                <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold">Sector Monitoring // 2026-02-02 10:08</p>
             </div>
             <button onclick="toggleTheme()" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 font-bold text-xs active:scale-95 transition-all">COLOR MODE</button>
         </header>
@@ -101,39 +104,39 @@
                 <h2 class="text-5xl font-black italic uppercase mb-10 tracking-tighter italic">Featured <span class="text-blue-600">精选资讯</span></h2>
                 <div class="swiper mySwiper"><div class="swiper-wrapper">
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/app/1222670/view/500596849929880692', '_blank')">
-            <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
+            <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ring-4 ring-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.8)]">
                 <img src="https://clan.fastly.steamstatic.com/images/38096876/b8970422b2767a50b895a18c751538f9959591e4.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
-                        
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31 17:00</span>
+                        <span class='bg-emerald-500 text-white text-[9px] px-2 py-1 rounded italic font-black animate-pulse'>FESTIVAL</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">The Sims™ 4 Lunar New Year Sale</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/32941522/view/517484714079027366', '_blank')">
-            <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ">
+            <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ring-4 ring-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.8)]">
                 <img src="https://clan.fastly.steamstatic.com/images/32941522/fd611158edb4564af9eeeb74e0a37cc03aa19a63.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
-                        
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31 01:30</span>
+                        <span class='bg-emerald-500 text-white text-[9px] px-2 py-1 rounded italic font-black animate-pulse'>FESTIVAL</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Welcome to the Bridge Constructor Franchise Sale 2026!</h2>
                 </div>
             </div>
         </div>
         <div class="swiper-slide cursor-pointer" onclick="window.open('https://store.steampowered.com/news/group/44794657/view/500594947381003217', '_blank')">
-            <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ring-4 ring-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.6)]">
+            <div class="relative h-[440px] w-full overflow-hidden rounded-[2.5rem] bg-[#1a1f26] border border-white/5 transition-all ring-4 ring-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.8)]">
                 <img src="https://clan.fastly.steamstatic.com/images/44794657/45fb314ba0055b9d33df01a55d468ef4699f9acc.png" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
-                        <span class='bg-emerald-500 text-white text-[10px] px-2 py-1 rounded italic font-black animate-pulse'>FESTIVAL</span>
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-29 07:44</span>
+                        <span class='bg-emerald-500 text-white text-[9px] px-2 py-1 rounded italic font-black animate-pulse'>FESTIVAL</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-29</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">再来一局 游戏节 2026</h2>
                 </div>
@@ -146,7 +149,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">02-01 20:45</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">02-01</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Thank you for 200,000 climbers!</h2>
                 </div>
@@ -159,7 +162,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">02-01 20:23</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">02-01</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Greatness Challenges Live</h2>
                 </div>
@@ -172,7 +175,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31 20:57</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">销量突破 25 万！</h2>
                 </div>
@@ -185,7 +188,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31 17:56</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Hotfix 2: Character Creation & starting Slums optimization</h2>
                 </div>
@@ -198,7 +201,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31 16:00</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Road Trip: Meet the Team</h2>
                 </div>
@@ -211,7 +214,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-30 15:43</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-30</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">史海拾遗·二月：血战硫磺岛</h2>
                 </div>
@@ -224,7 +227,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-29 15:00</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-29</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Valentione's Day Comes to Eorzea on February 2!</h2>
                 </div>
@@ -242,7 +245,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31 01:47</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Steam Deck Beta Client Update: January 30th</h2>
                 </div>
@@ -255,7 +258,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31 01:47</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-31</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Steam Client Beta - January 30th</h2>
                 </div>
@@ -268,7 +271,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-27 01:25</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-27</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Steam Deck 测试版客户端更新 - 1 月 26 日</h2>
                 </div>
@@ -281,7 +284,7 @@
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
                         
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-27 01:24</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-27</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Steam Client Beta - January 26th</h2>
                 </div>
@@ -293,8 +296,8 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
                 <div class="absolute bottom-0 p-8 w-full text-white">
                     <div class="flex items-center gap-3 mb-3">
-                        <span class='bg-emerald-500 text-white text-[10px] px-2 py-1 rounded italic font-black animate-pulse'>FESTIVAL</span>
-                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-26 21:06</span>
+                        <span class='bg-emerald-500 text-white text-[9px] px-2 py-1 rounded italic font-black animate-pulse'>FESTIVAL</span>
+                        <span class="font-mono text-[10px] text-blue-400 font-bold uppercase">01-26</span>
                     </div>
                     <h2 class="text-2xl font-black line-clamp-2 italic leading-tight uppercase tracking-tighter">Steam 棋盘游戏节开始了！</h2>
                 </div>
@@ -303,8 +306,8 @@
             </section>
         </main>
     </div>
-    <div id="ticker-bar" class="fixed bottom-0 left-0 w-full bg-blue-900 text-white py-4 z-[9999] overflow-hidden whitespace-nowrap border-t border-white/20">
-        <div class="inline-block animate-marquee px-4"><span class="font-bold italic text-sm uppercase"><span>🔥 正在开展: 棋盘游戏节</span> | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='text-yellow-500 font-bold hover:underline px-2 relative z-[9999]'>[点击跳转]</a> ——— <span>🔥 正在开展: 再来一局游戏节 (Tiny Roguelikes)</span> | <a href='https://store.steampowered.com/developer/rogueduck/sale/TinyRoguelikes2026' target='_blank' class='text-yellow-500 font-bold hover:underline px-2 relative z-[9999]'>[点击跳转]</a> ——— <span>🔥 正在开展: 棋盘游戏节</span> | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='text-yellow-500 font-bold hover:underline px-2 relative z-[9999]'>[点击跳转]</a> ——— <span>🔥 正在开展: 再来一局游戏节 (Tiny Roguelikes)</span> | <a href='https://store.steampowered.com/developer/rogueduck/sale/TinyRoguelikes2026' target='_blank' class='text-yellow-500 font-bold hover:underline px-2 relative z-[9999]'>[点击跳转]</a></span></div>
+    <div id="ticker-bar" class="fixed bottom-0 left-0 w-full bg-blue-900 text-white py-4 z-[9000] overflow-hidden whitespace-nowrap border-t border-white/20 shadow-2xl">
+        <div class="inline-block animate-marquee px-4"><span class="font-bold italic text-sm uppercase"><span>🔥 正在开展: 棋盘游戏节</span> | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a> ——— <span>🔥 正在开展: 再来一局游戏节 (Tiny Roguelikes)</span> | <a href='https://store.steampowered.com/developer/rogueduck/sale/TinyRoguelikes2026' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a> ——— <span>🔥 正在开展: 棋盘游戏节</span> | <a href='https://store.steampowered.com/category/tabletop' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a> ——— <span>🔥 正在开展: 再来一局游戏节 (Tiny Roguelikes)</span> | <a href='https://store.steampowered.com/developer/rogueduck/sale/TinyRoguelikes2026' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a></span></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
