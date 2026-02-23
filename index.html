@@ -35,7 +35,7 @@
         <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
             <div class="text-center md:text-left">
                 <h1 class="text-7xl font-black italic tracking-tighter uppercase leading-none">Steam<span class="text-blue-600">Intel</span></h1>
-                <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold">Sector Monitoring // 2026-02-22 18:27</p>
+                <p class="text-[11px] text-blue-600 font-mono mt-4 tracking-[0.5em] uppercase font-bold">Sector Monitoring // 2026-02-23 01:43</p>
             </div>
             <button onclick="toggleTheme()" class="px-8 py-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-white/10 font-bold text-xs active:scale-95 transition-all">COLOR MODE</button>
         </header>
@@ -44,12 +44,12 @@
             <div class="flex flex-nowrap gap-4 overflow-x-auto pb-6 mb-10 no-scrollbar select-none">
         <div class="flex-shrink-0 w-64 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 shadow-sm">
             <div class="flex justify-between items-center mb-4">
-                <span class="text-[10px] font-black text-slate-400 uppercase">○ PENDING</span>
+                <span class="text-[10px] font-black text-emerald-500 animate-pulse uppercase">● ACTIVE</span>
                 <span class="text-[10px] font-mono text-slate-400">02/23</span>
             </div>
             <div class="text-base font-bold truncate mb-4 dark:text-white">Steam 新品节 (2月版)</div>
             <div class="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-600" style="width: 20%"></div>
+                <div class="h-full bg-emerald-500" style="width: 100%"></div>
             </div>
         </div></div>
         </section>
@@ -298,7 +298,9 @@
             </section>
         </main>
     </div>
-    
+    <div id="ticker-bar" class="fixed bottom-0 left-0 w-full bg-blue-900 text-white py-4 z-[9000] overflow-hidden whitespace-nowrap border-t border-white/20 shadow-2xl">
+        <div class="inline-block animate-marquee px-4"><span class="font-bold italic text-sm uppercase"><span>🔥 正在开展: Steam 新品节 (2月版)</span> | <a href='https://store.steampowered.com/sale/nextfest' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a> ——— <span>🔥 正在开展: Steam 新品节 (2月版)</span> | <a href='https://store.steampowered.com/sale/nextfest' target='_blank' class='text-yellow-400 font-bold hover:underline px-2 relative z-[9999]'>[进入会场]</a></span></div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         document.querySelectorAll('.mySwiper').forEach(el => {
